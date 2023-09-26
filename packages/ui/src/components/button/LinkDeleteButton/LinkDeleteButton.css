@@ -1,0 +1,3 @@
+.mu-link-delete-button {
+  @apply text-red-500 hover:text-red-400;
+}

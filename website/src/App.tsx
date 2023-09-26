@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
+import { AiFillAccountBook } from "react-icons/ai";
 import { CacheProvider, useCache } from "@meta-ultra/cache";
-import { isEmpty } from "lodash-es";
+import { LinkDeleteButton } from "@meta-ultra/ui";
 import { cache } from "./cache";
 
 const Demo = () => {
@@ -10,7 +11,7 @@ const Demo = () => {
   return (
     <div>
       {message}
-      {isEmpty([])}
+      <LinkDeleteButton text="删除" />
     </div>
   );
 };

@@ -1,0 +1,23 @@
+.link-button {
+  @apply select-none block w-fit;
+
+  & .link-button__icon {
+    @apply inline-block mr-1 relative -top-[2px] text-base;
+  }
+
+  & .link-button__icon:last-child {
+    @apply hidden;
+  }
+  & .link-button__icon:first-child {
+    display: initial;
+  }
+
+  &:hover {
+    & .link-button__icon:first-child {
+      @apply hidden;
+    }
+    & .link-button__icon:last-child {
+      display: initial;
+    }
+  }
+}

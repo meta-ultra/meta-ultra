@@ -1,0 +1,8 @@
+node_modules
+dist
+build
+bundle
+scripts
+.vscode
+scripts
+*.config.js

@@ -29,16 +29,6 @@ module.exports = {
         corejs: 3,
       },
     ],
-    [
-      "import",
-      {
-        libraryName: "@meta-ultra/ui",
-        camel2DashComponentName: false,
-        style(name) {
-          return `${name}/style.css`;
-        },
-      },
-    ],
   ],
   env: {
     development: {
