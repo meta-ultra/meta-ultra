@@ -15,6 +15,9 @@
       "module": "./dist/cjs/*"
     }
   },
+  "files": [
+    "dist/**"
+  ],
   "main": "./dist/cjs/index.js",
   "types": "./dist/types",
   "author": "fsjohnhuang",
@@ -109,13 +112,14 @@
     "classnames": "^2.3.2",
     "core-js": "^3.31.0",
     "core-js-pure": "^3.31.0",
+    "dayjs": "^1.11.9",
     "lodash-es": "^4.17.21",
+    "rc-table": "^7.32.3",
     "react-icons": "^4.9.0",
     "react-use-event-hook": "^0.9.6",
     "scheduler": "^0.23.0",
     "size-sensor": "^1.0.1",
-    "yup": "^1.2.0",
-    "dayjs": "^1.11.9"
+    "yup": "^1.2.0"
   },
   "peerDependencies": {
     "@meta-ultra/cache": "0.1.4",

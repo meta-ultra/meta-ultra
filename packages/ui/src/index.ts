@@ -1,3 +1,4 @@
+import type {} from "rc-table";
 export type { LinkDeleteButtonProps } from "./components/button/LinkDeleteButton/LinkDeleteButton";
 export { default as LinkDeleteButton } from "./components/button/LinkDeleteButton/LinkDeleteButton";
 export type { LinkButtonProps } from "./components/button/LinkButton/LinkButton";
@@ -21,3 +22,9 @@ export type { MainProps, Tab } from "./components/layout/Main/Main";
 export { default as Main } from "./components/layout/Main/Main";
 export type { DynamicDatePickerProps } from "./components/form/DynamicDatePicker/DynamicDatePicker";
 export { default as DynamicDatePicker } from "./components/form/DynamicDatePicker/DynamicDatePicker";
+export type { QuerySectionProps } from "./components/section/QuerySection";
+export { default as QuerySection } from "./components/section/QuerySection";
+export type { TableSectionProps } from "./components/section/TableSection";
+export { default as TableSection } from "./components/section/TableSection";
+export type { UseCURDTableColumns } from "./templates/CURD";
+export { default as CURD } from "./templates/CURD";

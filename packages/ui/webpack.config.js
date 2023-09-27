@@ -25,6 +25,9 @@ module.exports = {
       "./src/components/button/LinkUpdateButton/LinkUpdateButton.tsx",
     Dialog: "./src/components/dialog/Dialog/index.ts",
     FormDialog: "./src/components/dialog/FormDialog/index.ts",
+    QuerySection: "./src/components/section/QuerySection/index.ts",
+    TableSection: "./src/components/section/TableSection/index.ts",
+    CURD: "./src/templates/CURD/index.ts",
   },
   output: {
     clean: true,
