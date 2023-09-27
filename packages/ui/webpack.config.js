@@ -13,6 +13,11 @@ module.exports = {
       import: "./src/index.ts",
       filename: "index.js",
     },
+    Header: "./src/components/layout/Header/Header.tsx",
+    Menu: "./src/components/layout/Menu/Menu.tsx",
+    Main: "./src/components/layout/Main/Main.tsx",
+    DynamicDatePicker:
+      "./src/components/form/DynamicDatePicker/DynamicDatePicker.tsx",
     LinkButton: "./src/components/button/LinkButton/LinkButton.tsx",
     LinkDeleteButton:
       "./src/components/button/LinkDeleteButton/LinkDeleteButton.tsx",

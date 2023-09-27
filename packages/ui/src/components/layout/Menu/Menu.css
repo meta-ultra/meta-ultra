@@ -1,0 +1,30 @@
+.mu-menu {
+  @apply h-full w-[0px] md:w-fit;
+}
+.mu-menu__content {
+  @apply w-fit h-full absolute z-50 sm:relative;
+}
+.mu-menu__content--collapsed {
+  @apply -left-[50px] md:left-[0px];
+}
+
+.mu-menu__sider {
+  @apply h-full overflow-x-hidden overflow-y-auto;
+}
+
+.mu-menu__header--collapsed {
+  @apply h-9;
+}
+.mu-menu__header--collapsed__icon {
+  @apply relative left-1/2 top-[5px] transform -translate-x-1/2 text-3xl;
+}
+.mu-menu__header--expanded {
+  @apply h-9 text-white text-xl font-extrabold pl-4 min-w-fit break-keep whitespace-nowrap;
+}
+.mu-menu__header--expanded__icon {
+  @apply text-3xl mr-1 inline-block;
+}
+
+.mu-menu__trigger {
+  @apply absolute top-[6px] -right-14 text-2xl px-5 cursor-pointer transition-colors hover:text-[#1677ff];
+}

@@ -8,6 +8,9 @@
     "build:type": "rimraf ./dist/types && tsc -P ./tsconfig.types.json"
   },
   "exports": {
+    ".": {
+      "module": "./dist/cjs/index.js"
+    },
     "./lib/*": {
       "module": "./dist/cjs/*"
     }

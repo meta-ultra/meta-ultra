@@ -1,0 +1,12 @@
+.mu-main {
+  margin: 5;
+  background: #fff;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mu-main__content {
+  @apply px-2 flex-1 overflow-hidden;
+}

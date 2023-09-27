@@ -1,0 +1,12 @@
+.mu-header__content {
+  @apply h-full w-full pt-2 flex flex-row-reverse;
+}
+.mu-header__avatar-icon {
+  @apply relative left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2;
+}
+.mu-header__exit {
+  @apply  px-2 py-1 rounded cursor-pointer hover:bg-slate-200 hover:text-[#1677ff];
+}
+.mu-header__exit-icon {
+  @apply inline-block relative -top-[2px] mr-1;
+}
