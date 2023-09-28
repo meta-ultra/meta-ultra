@@ -4,6 +4,6 @@
     "noEmit": false, // whether to suppress TypesScript generating code during the compilation process.
     "declaration": true,
     "emitDeclarationOnly": true,
-    "outDir": "./types"
+    "declarationDir": "./dist/types"
   }
 }

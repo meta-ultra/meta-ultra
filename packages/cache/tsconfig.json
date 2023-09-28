@@ -22,7 +22,7 @@
     "forceConsistentCasingInFileNames": true, // ensures the casing of referenced file names is consistent during the type checking process.
     "resolveJsonModule": true, // allows modules to be in `.json` file which are useful for configuration files.
     "isolatedModules": true, // disallow features that require cross-file information for emit.
-    "noEmit": false, // whether to suppress TypesScript generating code during the compilation process.
+    "noEmit": true, // whether to suppress TypesScript generating code during the compilation process.
     "outDir": "./dist/esm",
     "jsx": "react-jsx", // transpile JSX with `__jsx` invocation rather not `React.createElement`
     // keep the `paths` option in sync with `resolve.alias` option of Webpack

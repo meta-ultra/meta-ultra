@@ -1,17 +1,16 @@
 {
   "name": "@meta-ultra/cache",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Meta Ultra Cache",
   "scripts": {
+    "build": "pnpm run \"/^build:.*/\"",
     "build:cjs": "webpack",
-    "build:esm": "tsc",
-    "build:type": "tsc -P ./tsconfig.types.json"
+    "build:type": "rimraf ./dist/types && tsc -P ./tsconfig.types.json"
   },
   "author": "fsjohnhuang",
   "license": "MIT",
   "main": "./dist/cjs/index.js",
   "jsnext:main": "./dist/esm/index.js",
-  "module": "./dist/esm/index.js",
   "types": "./dist/types",
   "files": [
     "dist/**/*",

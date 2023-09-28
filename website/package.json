@@ -121,7 +121,7 @@
     "@formily/antd": "^2.2.27",
     "@formily/core": "^2.2.27",
     "@formily/react": "^2.2.27",
-    "@meta-ultra/cache": "0.1.4",
+    "@meta-ultra/cache": "workspace:^",
     "@meta-ultra/ui": "workspace:^",
     "antd": "^5.6.4",
     "axios": "^1.4.0",

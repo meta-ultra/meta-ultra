@@ -18,7 +18,7 @@ const configs = [dev, prod];
 const common = {
   entry: "./src/index.ts",
   output: {
-    path: path.resolve("./dist"),
+    path: path.resolve("./dist/cjs"),
     library: {
       type: "commonjs2",
     },
