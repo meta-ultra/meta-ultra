@@ -7,7 +7,7 @@ const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin");
 const { merge } = require("webpack-merge");
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: {
     index: {
       import: "./src/index.ts",
@@ -96,7 +96,8 @@ module.exports = {
       },
     ],
   },
-  devtool: "eval-cheap-module-source-map",
+  // devtool: "eval-cheap-module-source-map",
+  devtool: false,
   resolve: {
     // Stop resolving immediately, once existing file has been found.
     // If there are both `App.jsx` and `app.js`, `import * from "./app"` would be resolved to `App.jsx`.
