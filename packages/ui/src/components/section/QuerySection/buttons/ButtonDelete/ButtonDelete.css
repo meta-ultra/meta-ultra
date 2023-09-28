@@ -1,0 +1,13 @@
+.mu-button-delete {
+  @apply !hidden sm:!block;
+}
+.mu-button-delete__icon {
+  @apply relative top-[3px] mr-[5px];
+}
+
+.mu-button-delete--compact {
+  @apply sm:!hidden;
+}
+.mu-button-delete--compact__icon {
+  @apply relative top-[3px];
+}

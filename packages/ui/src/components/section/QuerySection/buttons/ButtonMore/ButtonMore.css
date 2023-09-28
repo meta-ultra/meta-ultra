@@ -1,0 +1,9 @@
+.mu-button-more {
+  @apply text-sm inline-block h-fit select-none;
+}
+.mu-button-more__icon {
+  @apply relative inline-block md:order-1 -top-[2px];
+}
+.mu-button-more__icon--expanded {
+  @apply rotate-180;
+}

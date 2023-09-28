@@ -1,0 +1,9 @@
+.mu-curd__delete-confirm__content {
+  @apply ml-1;
+}
+.mu-curd__delete-confirm__icon {
+  @apply inline-block text-yellow-400;
+}
+.mu-curd {
+  @apply h-full flex flex-col gap-2 md:pt-1;
+}

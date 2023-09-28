@@ -1,15 +1,15 @@
 import type { FC } from "react";
 import { Button } from "antd";
-import { AiTwotoneDelete } from "react-icons/ai";
+import { GrAdd } from "react-icons/gr";
 import useEvent from "react-use-event-hook";
-import { QueryButtonProps, QueryButtonStatus } from "./types";
-import { useQuerySectionContext } from "../useQuerySectionContext";
+import { QueryButtonProps, QueryButtonStatus } from "../types";
+import { useQuerySectionContext } from "../../useQuerySectionContext";
+import "./ButtonCreate.css";
 
-interface ButtonDeleteProps extends QueryButtonProps {
+interface ButtonSearchProps extends QueryButtonProps {
   text?: string;
 }
-
-const ButtonDelete: FC<ButtonDeleteProps> = (props) => {
+const ButtonCreate: FC<ButtonSearchProps> = (props) => {
   const { form } = useQuerySectionContext();
   const handleClick = useEvent(() => {
     props.onClick({ form });
@@ -19,26 +19,23 @@ const ButtonDelete: FC<ButtonDeleteProps> = (props) => {
     <div className={props.className} style={props.style}>
       <Button
         type="dashed"
-        danger
-        icon={<AiTwotoneDelete size={16} className="relative top-[3px] mr-[5px]" />}
+        icon={<GrAdd size={16} className="mu-button-create__icon" />}
         disabled={props.status == QueryButtonStatus.DISABLE}
         onClick={handleClick}
-        className="!hidden sm:!block"
+        className="mu-button-create"
       >
         <span>{props.text}</span>
       </Button>
       <Button
         shape="circle"
         type="dashed"
-        danger
-        icon={<AiTwotoneDelete size={16} className="relative top-[3px]" />}
+        icon={<GrAdd size={16} className="mu-button-create--compact__icon" />}
         disabled={props.status == QueryButtonStatus.DISABLE}
         onClick={handleClick}
-        className="sm:!hidden"
+        className="mu-button-create--compact"
       />
     </div>
   );
 };
-
-export type { ButtonDeleteProps };
-export { ButtonDelete };
+export type { ButtonSearchProps };
+export { ButtonCreate };

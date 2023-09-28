@@ -13,7 +13,7 @@ import { Form } from "antd";
 import classNames from "classnames";
 import { isElement, isFragment } from "react-is";
 import useEvent from "react-use-event-hook";
-import { ButtonMore } from "./buttons/ButtonMore";
+import { ButtonMore } from "./buttons/ButtonMore/ButtonMore";
 import { useWindowResize } from "../../../hooks/useWindowResize";
 import {
   useElements,
@@ -21,6 +21,7 @@ import {
 } from "../../../hooks/useElements/useElements";
 import { QuerySectionProvider } from "./useQuerySectionContext";
 import { withInitialProps } from "../../../hocs/withInitialProps";
+import "./QuerySection.css";
 
 type QuerySectionProps<
   QueryType extends object,
@@ -97,17 +98,18 @@ const QuerySection = <QueryType extends object, ContextType>(
 
   return (
     <section
-      className={classNames("flex gap-3 flex-col pt-2", props.className, {
-        "lg:flex-row": formItemCount <= 2 && (props.buttons?.length || 0) <= 4,
+      className={classNames("mu-query-section", props.className, {
+        "mu-query-section--lg":
+          formItemCount <= 2 && (props.buttons?.length || 0) <= 4,
       })}
     >
-      <section className=" flex-0">
+      <section className="mu-query-section__form-container">
         <Form
           form={form}
           className={classNames(props.formClassName, {
-            "grid gap-y-1 gap-x-4 md:gap-4 grid-cols-2":
+            "mu-query-section__form":
               props.formClassName === undefined && formItemCount >= 2,
-            "md:grid-cols-4":
+            "mu-query-section__form--lot":
               props.formClassName === undefined && formItemCount > 2,
           })}
         >
@@ -134,12 +136,9 @@ const QuerySection = <QueryType extends object, ContextType>(
         </Form>
       </section>
       <section
-        className={classNames(
-          " flex-0 flex flex-row gap-3 items-center flex-wrap",
-          {
-            "sm:flex-nowrap": formItemCount <= 2,
-          }
-        )}
+        className={classNames("mu-query-section__buttons", {
+          "mu-query-section__buttons--sm": formItemCount <= 2,
+        })}
       >
         <QuerySectionProvider value={{ form, formItemCount }}>
           {queryButtons}

@@ -1,0 +1,23 @@
+.mu-query-section {
+  @apply flex gap-3 flex-col pt-2;
+}
+.mu-query-section--lg {
+  @apply lg:flex-row;
+}
+
+.mu-query-section__form-container {
+  @apply flex;
+}
+.mu-query-section__form {
+  @apply grid gap-y-1 gap-x-4 md:gap-4 grid-cols-2;
+}
+.mu-query-section__form--lot {
+  @apply md:grid-cols-4;
+}
+
+.mu-query-section__buttons {
+  @apply flex flex-row gap-3 items-center flex-wrap;
+}
+.mu-query-section__buttons--sm {
+  @apply sm:flex-nowrap;
+}

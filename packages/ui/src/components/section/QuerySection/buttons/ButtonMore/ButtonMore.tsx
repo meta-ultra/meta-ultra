@@ -2,8 +2,9 @@ import type { FC } from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
 import classNames from "classnames";
 import useEvent from "react-use-event-hook";
-import { QueryButtonProps } from "./types";
-import { useQuerySectionContext } from "../useQuerySectionContext";
+import { QueryButtonProps } from "../types";
+import { useQuerySectionContext } from "../../useQuerySectionContext";
+import "./ButtonMore.css";
 
 interface ButtonMoreProps extends QueryButtonProps {
   text?: string;
@@ -19,13 +20,13 @@ const ButtonMore: FC<ButtonMoreProps> = (props) => {
 
   return (
     <a
-      className={classNames(" text-sm inline-block h-fit select-none", props.className)}
+      className={classNames("mu-button-more", props.className)}
       style={props.style}
       onClick={handleClick}
     >
       <IoChevronDownOutline
-        className={classNames("relative inline-block md:order-1 -top-[2px]", {
-          "rotate-180": props.expand,
+        className={classNames("mu-button-more__icon", {
+          "mu-button-more__icon--expanded": props.expand,
         })}
       />
       {props.text}

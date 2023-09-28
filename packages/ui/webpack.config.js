@@ -105,6 +105,7 @@ module.exports = {
     /^react-dom$/,
     /^antd$/,
     /^@babel\/runtime\/.*$/,
+    /^@meta-ultra\/.*$/,
     /**
      *
      * @param {*} param0

@@ -32,15 +32,16 @@ import {
   ContextualReactNodesType,
 } from "../../hooks/useElements/useElements";
 import { QueryButtonStatus } from "../../components/section/QuerySection/buttons/types";
-import { ButtonSearch } from "../../components/section/QuerySection/buttons/ButtonSearch";
-import { ButtonCreate } from "../../components/section/QuerySection/buttons/ButtonCreate";
-import { ButtonDelete } from "../../components/section/QuerySection/buttons/ButtonDelete";
-import { ButtonUpdate } from "../../components/section/QuerySection/buttons/ButtonUpdate";
+import { ButtonSearch } from "../../components/section/QuerySection/buttons/ButtonSearch/ButtonSearch";
+import { ButtonCreate } from "../../components/section/QuerySection/buttons/ButtonCreate/ButtonCreate";
+import { ButtonDelete } from "../../components/section/QuerySection/buttons/ButtonDelete/ButtonDelete";
+import { ButtonUpdate } from "../../components/section/QuerySection/buttons/ButtonUpdate/ButtonUpdate";
 import {
   buttonSearchModifier,
   buttonTextModifier,
 } from "../../hooks/useElements/modifiers";
 import FormDialog from "../../components/dialog/FormDialog/FormDialog";
+import "./CURD.css";
 
 const {
   useTableColumns,
@@ -340,7 +341,7 @@ const CURD = <
 
     modal.confirm({
       content: (
-        <span className="ml-1">
+        <span className="mu-curd__delete-confirm__content">
           {typeof props.deleteConfirmText == "string"
             ? props.deleteConfirmText
             : props.deleteConfirmText(state, selectedRowKeys.length)}
@@ -349,7 +350,7 @@ const CURD = <
       icon: (
         <AiOutlineExclamationCircle
           size={24}
-          className="inline-block text-yellow-400"
+          className="mu-curd__delete-confirm__icon"
         />
       ),
       okText: props.deleteOkText,
@@ -577,7 +578,7 @@ const CURD = <
     <>
       {modalContextHolder}
       {messageContextHolder}
-      <div className="h-full flex flex-col gap-2 md:pt-1">
+      <div className="mu-curd">
         {props.breadcrumb && <Breadcrumb items={props.breadcrumb} />}
         <QuerySection
           initialValues={internalState.query}

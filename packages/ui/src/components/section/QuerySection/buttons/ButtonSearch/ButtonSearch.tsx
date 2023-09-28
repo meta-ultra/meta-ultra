@@ -3,8 +3,9 @@ import { Button } from "antd";
 import { HiOutlineRefresh } from "react-icons/hi";
 import { FiSearch } from "react-icons/fi";
 import useEvent from "react-use-event-hook";
-import { QueryButtonProps, QueryButtonStatus } from "./types";
-import { useQuerySectionContext } from "../useQuerySectionContext";
+import { QueryButtonProps, QueryButtonStatus } from "../types";
+import { useQuerySectionContext } from "../../useQuerySectionContext";
+import "./ButtonSearch.css";
 
 interface ButtonSearchProps extends QueryButtonProps {
   refreshText?: string;
@@ -22,11 +23,11 @@ const ButtonSearch: FC<ButtonSearchProps> = (props) => {
       <Button
         type="primary"
         icon={createElement(formItemCount == 0 ? HiOutlineRefresh : FiSearch, {
-          className: "relative top-[3px] mr-[5px] text-base",
+          className: "mu-button-search__icon",
         })}
         disabled={props.status == QueryButtonStatus.DISABLE}
         onClick={handleClick}
-        className="!hidden sm:!block"
+        className="mu-button-search"
       >
         <span>{formItemCount == 0 ? props.refreshText : props.searchText}</span>
       </Button>
@@ -34,11 +35,11 @@ const ButtonSearch: FC<ButtonSearchProps> = (props) => {
         shape="circle"
         type="primary"
         icon={createElement(formItemCount == 0 ? HiOutlineRefresh : FiSearch, {
-          className: "relative top-[3px] text-base",
+          className: "mu-button-search--compact__icon",
         })}
         disabled={props.status == QueryButtonStatus.DISABLE}
         onClick={handleClick}
-        className="sm:!hidden"
+        className="mu-button-search--compact"
       />
     </div>
   );

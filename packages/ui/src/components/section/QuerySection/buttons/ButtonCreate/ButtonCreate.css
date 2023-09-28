@@ -1,0 +1,13 @@
+.mu-button-create {
+  @apply !hidden sm:!block;
+}
+.mu-button-create__icon {
+  @apply relative top-[3px] mr-[5px] text-base;
+}
+
+.mu-button-create--compact {
+  @apply sm:!hidden;
+}
+.mu-button-create--compact__icon {
+  @apply relative top-[3px] text-base;
+}

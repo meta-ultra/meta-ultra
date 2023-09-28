@@ -1,0 +1,13 @@
+.mu-button-search {
+  @apply !hidden sm:!block;
+}
+.mu-button-search__icon {
+  @apply relative top-[3px] mr-[5px] text-base;
+}
+
+.mu-button-search--compact {
+  @apply sm:!hidden;
+}
+.mu-button-search--compact__icon {
+  @apply relative top-[3px] text-base;
+}
