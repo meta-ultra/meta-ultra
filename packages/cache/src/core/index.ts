@@ -1,2 +1,2 @@
 export { Cache } from "./Cache";
-// export { DefaultStorage } from "./DefaultStorage";
+export { DefaultStorage } from "./DefaultStorage";
