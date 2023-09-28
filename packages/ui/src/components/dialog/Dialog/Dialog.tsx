@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import { Modal, Spin, Skeleton } from "antd";
 import { DialogContextProvider } from "./useDialogContext";
-import { useLoading } from "../../../hooks/useLoading";
+import useLoading from "../../../hooks/useLoading";
 
 interface DialogProps {
   title: string;

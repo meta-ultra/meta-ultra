@@ -8,11 +8,10 @@ import {
 } from "react";
 import { Form, Button, FormInstance } from "antd";
 import useEvent from "react-use-event-hook";
-import Dialog, { DialogProps } from "../Dialog/Dialog";
-import { useDialogContext } from "../Dialog/useDialogContext";
+import Dialog, { DialogProps } from "../Dialog";
 import ButtonDialogConfirm from "../ButtonDialogConfirm";
 import { FormDialogContextProvider } from "./useFormDialog";
-import { useElements } from "../../../hooks/useElements/useElements";
+import useElements from "../../../hooks/useElements/useElements";
 import { createPropertySetterModifier } from "../../../hooks/useElements/modifiers/createPropertySetterModifier";
 
 interface FormDialogProps<RecordType extends object = object>
@@ -29,7 +28,7 @@ interface FormDialogContentProps<RecordType extends object = object> {
 }
 const FormDialogContent = memo(
   ({ children, form, record }: FormDialogContentProps) => {
-    const context = useDialogContext();
+    const context = Dialog.useDialogContext();
     const formContext = useMemo(
       () => ({
         record,

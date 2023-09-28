@@ -28,6 +28,13 @@ module.exports = {
     QuerySection: "./src/components/section/QuerySection/index.ts",
     TableSection: "./src/components/section/TableSection/index.ts",
     CURD: "./src/templates/CURD/index.ts",
+    useElements: "./src/hooks/useElements/useElements.ts",
+    useLoading: "./src/hooks/useLoading.ts",
+    useWindowResize: "./src/hooks/useWindowResize.ts",
+    useBorrow: "./src/hooks/useBorrow.ts",
+    useBreadcrumb: "./src/hooks/useBreadcrumb.ts",
+    withInitialProps: "./src/hocs/withInitialProps.ts",
+    rules: "./src/utils/rules.ts",
   },
   output: {
     clean: true,
@@ -89,6 +96,7 @@ module.exports = {
       },
     ],
   },
+  devtool: "eval-cheap-module-source-map",
   resolve: {
     // Stop resolving immediately, once existing file has been found.
     // If there are both `App.jsx` and `app.js`, `import * from "./app"` would be resolved to `App.jsx`.

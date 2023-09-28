@@ -5,8 +5,8 @@ import {
   RecordTypeConstraint,
   ContextCheckboxType,
 } from "./useTableColumns/types";
-import { useWindowResize } from "../../../hooks/useWindowResize";
-import { withInitialProps } from "../../../hocs/withInitialProps";
+import useWindowResize from "../../../hooks/useWindowResize";
+import withInitialProps from "../../../hocs/withInitialProps";
 
 interface IPagination {
   defaultPageSize: number;

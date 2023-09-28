@@ -45,4 +45,5 @@ const ButtonSearch: FC<ButtonSearchProps> = (props) => {
   );
 };
 
+export type { ButtonSearchProps };
 export { ButtonSearch };

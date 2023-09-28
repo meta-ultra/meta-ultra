@@ -26,9 +26,8 @@ import { UseTableColumns } from "../../components/section/TableSection/useTableC
 import QuerySection, {
   QuerySectionProps,
 } from "../../components/section/QuerySection";
-import {
+import useElements, {
   UseElements,
-  useElements,
   ContextualReactNodesType,
 } from "../../hooks/useElements/useElements";
 import { QueryButtonStatus } from "../../components/section/QuerySection/buttons/types";
@@ -364,7 +363,7 @@ const CURD = <
             const result = await props.onDeleteRecords(keys);
             dispatch({
               type: "PAGINATION/SET",
-              payload: { ...state.pagination },
+              payload: { ...internalState.pagination },
             }); // refresh the table
             if (result) {
               messageApi.open({ type: "error", content: result.error.message });

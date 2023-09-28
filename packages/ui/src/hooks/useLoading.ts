@@ -16,4 +16,4 @@ const useLoading = (
   return [loading, renderableChildren, { setLoading }];
 };
 
-export { useLoading };
+export default useLoading;

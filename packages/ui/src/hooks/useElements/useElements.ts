@@ -1,4 +1,11 @@
-import { ReactFragment, ReactElement, ReactNode, DependencyList, useMemo, Children } from "react";
+import {
+  ReactFragment,
+  ReactElement,
+  ReactNode,
+  DependencyList,
+  useMemo,
+  Children,
+} from "react";
 import { isFragment, isElement } from "react-is";
 import {
   applyModifiers,
@@ -9,7 +16,10 @@ import {
 } from "./modifiers";
 import { ContextualType } from "./types";
 
-type ContextualReactNodesType<ContextType> = ContextualType<ContextType, ReactNode[]> & {
+type ContextualReactNodesType<ContextType> = ContextualType<
+  ContextType,
+  ReactNode[]
+> & {
   modifiers?: ModifierType[];
 };
 
@@ -47,14 +57,18 @@ const useElements = <ContextType>(
       };
     } else {
       contextualElements = {
-        elements: (elements as ContextualReactElementType<ContextType>).elements,
-        modifiers: (elements as ContextualReactElementType<ContextType>).modifiers ?? [],
+        elements: (elements as ContextualReactElementType<ContextType>)
+          .elements,
+        modifiers:
+          (elements as ContextualReactElementType<ContextType>).modifiers ?? [],
         context: (elements as ContextualReactElementType<ContextType>).context,
       };
     }
 
     // TODO: drill into nested fragment
-    let reactNodes: ChildrenToArrayReturnType | undefined = isFragment(contextualElements.elements)
+    let reactNodes: ChildrenToArrayReturnType | undefined = isFragment(
+      contextualElements.elements
+    )
       ? Children.toArray(contextualElements.elements.props.children)
       : ([contextualElements.elements] as ChildrenToArrayReturnType);
 
@@ -65,7 +79,11 @@ const useElements = <ContextType>(
       visibleModifier,
     ];
 
-    reactNodes = applyModifiers(contextedModifiers, reactNodes, contextualElements.context);
+    reactNodes = applyModifiers(
+      contextedModifiers,
+      reactNodes,
+      contextualElements.context
+    );
 
     // in account of the properties of ReactElement are all read only,
     // map the children from ReactFragment or <></> into a normal array,
@@ -81,5 +99,9 @@ const useElements = <ContextType>(
   }, deps);
 };
 
-export type { ContextualReactNodesType, ContextualReactElementType, UseElements };
-export { useElements };
+export type {
+  ContextualReactNodesType,
+  ContextualReactElementType,
+  UseElements,
+};
+export default useElements;

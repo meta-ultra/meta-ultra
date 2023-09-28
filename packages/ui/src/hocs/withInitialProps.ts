@@ -66,4 +66,4 @@ const withInitialProps = <P extends object>(
   return WrapperComponent;
 };
 
-export { withInitialProps };
+export default withInitialProps;

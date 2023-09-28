@@ -1,6 +1,6 @@
 {
   "name": "@meta-ultra/ui",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Meta Ultra UI",
   "scripts": {
     "build": "pnpm run \"/^build:.*/\"",
@@ -11,6 +11,7 @@
     ".": {
       "module": "./dist/cjs/index.js"
     },
+    "./style.css": "./dist/cjs/style.css",
     "./lib/*": {
       "module": "./dist/cjs/*"
     }
@@ -122,7 +123,7 @@
     "yup": "^1.2.0"
   },
   "peerDependencies": {
-    "@meta-ultra/cache": "0.1.4",
+    "@meta-ultra/cache": "workspace:^",
     "antd": "^5.6.4",
     "react": "^18.2.0",
     "react-dom": "18.2.0"

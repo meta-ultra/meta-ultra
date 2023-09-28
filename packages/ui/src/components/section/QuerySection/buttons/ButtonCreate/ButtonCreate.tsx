@@ -6,10 +6,10 @@ import { QueryButtonProps, QueryButtonStatus } from "../types";
 import { useQuerySectionContext } from "../../useQuerySectionContext";
 import "./ButtonCreate.css";
 
-interface ButtonSearchProps extends QueryButtonProps {
+interface ButtonCreateProps extends QueryButtonProps {
   text?: string;
 }
-const ButtonCreate: FC<ButtonSearchProps> = (props) => {
+const ButtonCreate: FC<ButtonCreateProps> = (props) => {
   const { form } = useQuerySectionContext();
   const handleClick = useEvent(() => {
     props.onClick({ form });
@@ -37,5 +37,5 @@ const ButtonCreate: FC<ButtonSearchProps> = (props) => {
     </div>
   );
 };
-export type { ButtonSearchProps };
+export type { ButtonCreateProps };
 export { ButtonCreate };

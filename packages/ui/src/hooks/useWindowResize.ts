@@ -44,4 +44,4 @@ const useWindowResize = (initialValue?: { width: number; height: number }) => {
   return dimensions;
 };
 
-export { useWindowResize };
+export default useWindowResize;

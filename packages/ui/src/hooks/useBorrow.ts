@@ -27,4 +27,4 @@ const useBorrow = (
   return [context, isBorrowed];
 };
 
-export { useBorrow };
+export default useBorrow;

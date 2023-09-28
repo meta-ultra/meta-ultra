@@ -14,13 +14,12 @@ import classNames from "classnames";
 import { isElement, isFragment } from "react-is";
 import useEvent from "react-use-event-hook";
 import { ButtonMore } from "./buttons/ButtonMore/ButtonMore";
-import { useWindowResize } from "../../../hooks/useWindowResize";
-import {
-  useElements,
+import useWindowResize from "../../../hooks/useWindowResize";
+import useElements, {
   ContextualReactNodesType,
 } from "../../../hooks/useElements/useElements";
 import { QuerySectionProvider } from "./useQuerySectionContext";
-import { withInitialProps } from "../../../hocs/withInitialProps";
+import withInitialProps from "../../../hocs/withInitialProps";
 import "./QuerySection.css";
 
 type QuerySectionProps<
