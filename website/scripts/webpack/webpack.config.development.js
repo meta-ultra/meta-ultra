@@ -11,7 +11,7 @@ module.exports = (mode, envVars) => {
       type: "filesystem",
     },
     module: {
-      noParse: /^(lodash|jquery)$/,
+      noParse: /lodash|jquery/,
       rules: [
         {
           test: /\.css$/i,

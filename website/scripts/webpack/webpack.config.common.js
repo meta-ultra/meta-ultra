@@ -28,7 +28,7 @@ module.exports = (mode, envVars) => {
           use: "yaml-loader",
         },
         {
-          test: /\.(a?png|jpe?g|gif|webp|hdr|eot|otf|ttf|woff2?)$/i,
+          test: /\.(png|jpe?g|gif|webp|hdr|eot|otf|ttf|woff)$/i,
           // a file with size less than 8kb will be treated as a `inline` module type and `resource` module type otherwise.
           type: "asset",
         },

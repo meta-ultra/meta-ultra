@@ -1,7 +1,7 @@
 {
-  "name": "@meta-ultra/website",
-  "version": "0.1.0",
-  "description": "Meta Ultra Website ",
+  "name": "managment",
+  "version": "1.0.0",
+  "description": "yingke managment system",
   "scripts": {
     "dev": "webpack serve --env development",
     "build": "webpack --env production",

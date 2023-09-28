@@ -4,21 +4,14 @@ const { getEnvVars } = require("./scripts/webpack/env");
 
 const proxy = [
   {
-    context: [
-      "/smartpark/api",
-      "/smartpark/file",
-      "/workorder/api",
-      "/workorder/file",
-    ],
+    context: ["/smartpark/api", "/smartpark/file", "/workorder/api", "/workorder/file"],
     target: "https://fyict.cn:8091",
     secure: false,
   },
 ];
 
 module.exports = (env, argv) => {
-  const mode = (process.env.NODE_ENV = env.production
-    ? "production"
-    : "development");
+  const mode = (process.env.NODE_ENV = env.production ? "production" : "development");
   const envVars = getEnvVars(mode);
   console.log(envVars);
 

@@ -29,16 +29,23 @@ module.exports = {
         corejs: 3,
       },
     ],
-    [
-      "import",
-      {
-        libraryName: "@meta-ultra/ui",
-        camel2DashComponentName: false,
-        style(name) {
-          return `${name}/style.css`;
-        },
-      },
-    ],
+    // [
+    //   "import",
+    //   {
+    //     libraryName: "@meta-ultra/ui",
+    //     camel2DashComponentName: false,
+    //     style(name) {
+    //       const moduleName = name.split("/").pop();
+    //       if (
+    //         /[A-Z]/.test(moduleName[0]) &&
+    //         ["Dialog", "FormDialog", "DynamicDatePicker", "TableSection"].indexOf(moduleName) === -1
+    //       ) {
+    //         return `${name}/style.css`;
+    //       }
+    //       return false;
+    //     },
+    //   },
+    // ],
   ],
   env: {
     development: {
