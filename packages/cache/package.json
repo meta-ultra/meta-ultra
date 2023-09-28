@@ -1,6 +1,6 @@
 {
   "name": "@meta-ultra/cache",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Meta Ultra Cache",
   "scripts": {
     "build": "pnpm run \"/^build:.*/\"",
