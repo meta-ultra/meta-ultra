@@ -2,6 +2,11 @@
   "name": "@meta-ultra/cache",
   "version": "0.1.7",
   "description": "Meta Ultra Cache",
+  "keywords": [
+    "react",
+    "cache",
+    "Meta Ultra"
+  ],
   "scripts": {
     "build": "pnpm run \"/^build:.*/\"",
     "build:cjs": "webpack",

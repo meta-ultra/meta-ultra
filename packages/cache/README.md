@@ -55,4 +55,22 @@ A strong and boost cache module belongs to Meta Ultra versatile solution.
 
 ## API
 
--
+### The `Cache` class
+
+- Constructor `new Cache(configuration: Configuration)`
+  - The `Configuration` type
+    - `id` defaults to `MetaUltra`, it's used to identify the project
+    - `maxCount` wait to implement
+    - `maxSize` wait to implement
+    - `strategy` wait to implement
+    - `storage` specify where to persist on
+    - `serializeInteral` work with `storage`, specify how long to save the serialized cache to the store in milliseconds.
+- `onReady(cb: () => void)` the callback function would be invoked when the cache instance has initialized.
+- `get<R>(key: string): undefined | R` get value from cache
+- `set(key: string, value: unknown, option?: Option | number): void` set a value in cache
+- `remove(key: string)` remove a entry from cache
+- `dispose()` destroy the cache
+
+### The `DefaultStorage` class
+
+It save the cache in the LocalStorage under the hood.
