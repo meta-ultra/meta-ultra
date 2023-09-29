@@ -10,7 +10,7 @@ class Cache {
   private disposes: (() => void)[] = [];
 
   constructor(private config?: Configuration) {
-    this.id = (config && config.id) || "MetaPro";
+    this.id = (config && config.id) || "MetaUltra";
     this.serializeBeforeUnload();
     this.serializeInterval();
     this.deserialize();
