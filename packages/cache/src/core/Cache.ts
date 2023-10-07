@@ -101,10 +101,15 @@ class Cache {
 
   get<R = unknown>(key: string): undefined | R {
     if (this.cache === null) {
-      throw Error(`[${this.id}] This cache instance has been disposed.`);
+      throw Error(`[${this.id}] Cache instance has been disposed.`);
     }
     if (this.status === Status.INITIALIZING) {
-      return undefined;
+      if (process.env.NODE_ENV === "test") {
+        throw Error(`[${this.id}] Cache instance is still initializing`);
+      } else {
+        console.warn(`[${this.id}] Cache instance is still initializing`);
+        return undefined;
+      }
     }
 
     const item = this.cache.get(key);
@@ -124,7 +129,12 @@ class Cache {
       throw Error(`[${this.id}] This cache instance has been disposed.`);
     }
     if (this.status === Status.INITIALIZING) {
-      return undefined;
+      if (process.env.NODE_ENV === "test") {
+        throw Error(`[${this.id}] Cache instance is still initializing`);
+      } else {
+        console.warn(`[${this.id}] Cache instance is still initializing`);
+        return undefined;
+      }
     }
 
     const item =
