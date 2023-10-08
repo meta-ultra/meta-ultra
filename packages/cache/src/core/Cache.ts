@@ -137,6 +137,10 @@ class Cache {
       }
     }
 
+    if (value === undefined) {
+      this.cache.delete(key);
+    }
+
     const item =
       this.cache.get(key) ||
       ({
@@ -171,15 +175,25 @@ class Cache {
     }
   }
 
-  remove(key: string): void {
+  remove<R = unknown>(key: string): R | undefined {
     if (this.cache === null) {
       throw Error(`[${this.id}] This cache instance has been disposed.`);
     }
     if (this.status === Status.INITIALIZING) {
-      return undefined;
+      if (process.env.NODE_ENV === "test") {
+        throw Error(`[${this.id}] Cache instance is still initializing`);
+      } else {
+        console.warn(`[${this.id}] Cache instance is still initializing`);
+        return undefined;
+      }
     }
 
-    this.cache.delete(key);
+    const stale = this.get(key);
+    if (stale !== undefined) {
+      this.cache.delete(key);
+    }
+
+    return stale as R | undefined;
   }
 }
 
