@@ -175,7 +175,7 @@ class Cache {
     }
   }
 
-  remove<R = unknown>(key: string): R | undefined {
+  remove<R = unknown>(key: string | string[]): R | undefined | Array<unknown> {
     if (this.cache === null) {
       throw Error(`[${this.id}] This cache instance has been disposed.`);
     }
@@ -188,12 +188,24 @@ class Cache {
       }
     }
 
-    const stale = this.get(key);
-    if (stale !== undefined) {
-      this.cache.delete(key);
+    const stales: Array<unknown> = [];
+    const keys = typeof key === "string" ? [key] : key;
+    for (let i = 0; i < keys.length; ++i) {
+      const key = keys[i];
+      if (key) {
+        const stale = this.get(key);
+        stales.push(stale);
+        if (stale !== undefined) {
+          this.cache.delete(key);
+        }
+      }
     }
 
-    return stale as R | undefined;
+    if (typeof key === "string") {
+      return stales[0] as R | undefined;
+    } else {
+      return stales;
+    }
   }
 }
 
