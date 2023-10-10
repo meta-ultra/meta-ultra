@@ -16,14 +16,16 @@ class DefaultStorage implements Storage {
     this.baseDateTime = +new Date(`${baseYearMonth}/01`);
   }
 
-  serialize(id: string, cache: Map<string, CacheItem>) {
+  save(id: string, cache: Map<string, CacheItem>) {
     const curr = new Date();
     const kvs: Record<string, unknown> = {};
     for (const [name, item] of cache.entries()) {
       if (item.persistent && (item.expires as Date) > curr) {
         const key = [
           name,
-          item.expires !== null ? String(+item.expires - this.baseDateTime) : "",
+          item.expires !== null
+            ? String(+item.expires - this.baseDateTime)
+            : "",
         ].join("-");
         const value = item.value;
 
@@ -37,7 +39,7 @@ class DefaultStorage implements Storage {
     }
   }
 
-  async deserialize(id: string): Promise<Map<string, CacheItem>> {
+  async initialize(id: string): Promise<Map<string, CacheItem>> {
     const curr = new Date();
     const cache = new Map<string, CacheItem>();
     const item = this.storage.getItem(id);

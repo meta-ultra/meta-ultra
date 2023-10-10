@@ -5,24 +5,23 @@ class Cache {
   public readonly id: string;
   private status: Status = Status.INITIALIZING;
   private cbs: (() => void)[] & { fd?: ReturnType<typeof setTimeout> } = [];
-  private parent?: Cache;
   private cache: Map<string, CacheItem> | null = new Map<string, CacheItem>();
   private disposes: (() => void)[] = [];
 
   constructor(private config?: Configuration) {
     this.id = (config && config.id) || "MetaUltra";
-    this.serializeBeforeUnload();
-    this.serializeInterval();
-    this.deserialize();
+    this.saveBeforeUnload();
+    this.savePeriodically();
+    this.initialize();
   }
 
-  serializeBeforeUnload(): void {
+  private saveBeforeUnload(): void {
     if (this.config && this.config.storage) {
       const handler = () => {
         this.cache &&
           this.config &&
           this.config.storage &&
-          this.config.storage.serialize(this.id, this.cache);
+          this.config.storage.save(this.id, this.cache);
       };
       window.addEventListener("beforeunload", handler);
 
@@ -32,13 +31,13 @@ class Cache {
     }
   }
 
-  serializeInterval(): void {
+  private savePeriodically(): void {
     if (this.config && this.config.serializeInterval && this.config.storage) {
       const hd = setInterval(() => {
         this.cache &&
           this.config &&
           this.config.storage &&
-          this.config.storage.serialize(this.id, this.cache);
+          this.config.storage.save(this.id, this.cache);
       }, this.config.serializeInterval);
 
       this.disposes.push(() => {
@@ -47,11 +46,11 @@ class Cache {
     }
   }
 
-  deserialize(): void {
+  private initialize(): void {
     if (this.config && this.config.storage) {
       (async () => {
         if (this.cache && this.config && this.config.storage) {
-          this.cache = await this.config.storage.deserialize(this.id);
+          this.cache = await this.config.storage.initialize(this.id);
           this.status = Status.IDLE;
         } else {
           this.status = Status.IDLE;

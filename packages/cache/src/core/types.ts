@@ -1,10 +1,5 @@
-import { Strategy } from "./enums";
-
 interface Configuration {
   id?: string;
-  maxCount?: number; // TODO
-  maxSize?: number; // TODO
-  strategy?: Strategy; // TODO
   storage?: Storage;
   serializeInterval?: number;
 }
@@ -20,8 +15,8 @@ interface Option {
 }
 
 interface Storage {
-  serialize(id: string, cache: Map<string, CacheItem>): void;
-  deserialize(id: string): Promise<Map<string, CacheItem>>;
+  initialize(id: string): Promise<Map<string, CacheItem>>;
+  save(id: string, cache: Map<string, CacheItem>): void;
 }
 
 export type { Configuration, CacheItem, Option, Storage };

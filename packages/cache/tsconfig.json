@@ -34,7 +34,7 @@
   },
   "include": [
     "src",
-    "test",
+    "src/test",
   ], // files and folders for TypeScript type checking.
   "exclude": [
     "dist",

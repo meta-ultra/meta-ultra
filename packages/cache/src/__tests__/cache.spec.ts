@@ -1,5 +1,5 @@
-import { Cache } from "../src/core/Cache";
-import { CacheItem } from "../src/core/types";
+import { Cache } from "../core/Cache";
+import { CacheItem } from "../core/types";
 
 let cache: Cache;
 beforeEach(() => {
@@ -16,10 +16,10 @@ describe("Cache#get", () => {
 
   it("should throw an error when cache instance is initializing", () => {
     const storage = {
-      serialize(id: string, cache: Map<string, CacheItem>): void {
+      save(id: string, cache: Map<string, CacheItem>): void {
         //
       },
-      deserialize(id: string): Promise<Map<string, CacheItem>> {
+      initialize(id: string): Promise<Map<string, CacheItem>> {
         return new Promise((resolve) => {
           setTimeout(resolve, 1000);
         });
@@ -111,10 +111,10 @@ describe("Cache#set", () => {
 
   it("should throw an error when cache instance is initializing", () => {
     const storage = {
-      serialize(id: string, cache: Map<string, CacheItem>): void {
+      save(id: string, cache: Map<string, CacheItem>): void {
         //
       },
-      deserialize(id: string): Promise<Map<string, CacheItem>> {
+      initialize(id: string): Promise<Map<string, CacheItem>> {
         return new Promise((resolve) => {
           setTimeout(resolve, 1000);
         });
@@ -146,10 +146,10 @@ describe("Cache#remove", () => {
 
   it("should throw an error when cache instance is initializing", () => {
     const storage = {
-      serialize(id: string, cache: Map<string, CacheItem>): void {
+      save(id: string, cache: Map<string, CacheItem>): void {
         //
       },
-      deserialize(id: string): Promise<Map<string, CacheItem>> {
+      initialize(id: string): Promise<Map<string, CacheItem>> {
         return new Promise((resolve) => {
           setTimeout(resolve, 1000);
         });
@@ -179,10 +179,10 @@ describe("Cache#onReady", () => {
 
   it("execute callbacks after 1000ms", (done) => {
     const storage = {
-      serialize(id: string, cache: Map<string, CacheItem>): void {
+      save(id: string, cache: Map<string, CacheItem>): void {
         //
       },
-      deserialize(id: string): Promise<Map<string, CacheItem>> {
+      initialize(id: string): Promise<Map<string, CacheItem>> {
         return new Promise((resolve) => {
           setTimeout(() => {
             resolve(new Map());

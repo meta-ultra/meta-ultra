@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { renderHook, render, screen, waitFor } from "@testing-library/react";
-import { Cache } from "../src/core/Cache";
-import { CacheItem } from "../src/core/types";
-import { useCache, CacheProvider } from "../src/react/CacheContext";
-import { withCache } from "../src/react/withCache";
+import { Cache } from "../core/Cache";
+import { CacheItem } from "../core/types";
+import { useCache, CacheProvider } from "../react/CacheContext";
+import { withCache } from "../react/withCache";
 
 beforeAll(() => {
   jest.spyOn(console, "error").mockImplementation(() => jest.fn());
@@ -59,10 +59,10 @@ describe("withCache", () => {
     render(<WithCache />, {
       wrapper({ children }) {
         const storage = {
-          serialize(id: string, cache: Map<string, CacheItem>): void {
+          save(id: string, cache: Map<string, CacheItem>): void {
             //
           },
-          deserialize(id: string): Promise<Map<string, CacheItem>> {
+          initialize(id: string): Promise<Map<string, CacheItem>> {
             return new Promise((resolve) => {
               setTimeout(() => {
                 resolve(new Map());
