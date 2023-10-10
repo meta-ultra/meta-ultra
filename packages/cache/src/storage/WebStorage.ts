@@ -1,11 +1,11 @@
 import { isEmpty } from "lodash-es";
-import { Storage, CacheItem } from "./types";
+import { Storage, CacheItem } from "../core/types";
 
 type Month1 = `0${Exclude<number, 0>}`;
 type Month2 = `1${0 | 1 | 2}`;
 
-class DefaultStorage implements Storage {
-  private baseDateTime: number;
+class WebStorage implements Storage {
+  #baseDateTime: number;
 
   constructor(
     baseYearMonth: `${Exclude<number, 0>}${number}${number}${number}/${
@@ -13,30 +13,7 @@ class DefaultStorage implements Storage {
       | Month2}` = "2023/08",
     private storage = localStorage
   ) {
-    this.baseDateTime = +new Date(`${baseYearMonth}/01`);
-  }
-
-  save(id: string, cache: Map<string, CacheItem>) {
-    const curr = new Date();
-    const kvs: Record<string, unknown> = {};
-    for (const [name, item] of cache.entries()) {
-      if (item.persistent && (item.expires as Date) > curr) {
-        const key = [
-          name,
-          item.expires !== null
-            ? String(+item.expires - this.baseDateTime)
-            : "",
-        ].join("-");
-        const value = item.value;
-
-        kvs[key] = value;
-      }
-    }
-    if (isEmpty(kvs)) {
-      this.storage.removeItem(id);
-    } else {
-      this.storage.setItem(id, JSON.stringify(kvs));
-    }
+    this.#baseDateTime = +new Date(`${baseYearMonth}/01`);
   }
 
   async initialize(id: string): Promise<Map<string, CacheItem>> {
@@ -51,7 +28,7 @@ class DefaultStorage implements Storage {
         let expires: Date | null = null;
         if (name === undefined) continue;
         if (strExpires && !isNaN(Number(strExpires))) {
-          expires = new Date(this.baseDateTime + Number(strExpires));
+          expires = new Date(this.#baseDateTime + Number(strExpires));
           if (expires <= curr) {
             continue;
           }
@@ -67,6 +44,29 @@ class DefaultStorage implements Storage {
 
     return cache;
   }
+
+  persist(id: string, cache: Map<string, CacheItem>) {
+    const curr = new Date();
+    const kvs: Record<string, unknown> = {};
+    for (const [name, item] of cache.entries()) {
+      if (item.persistent && (item.expires as Date) > curr) {
+        const key = [
+          name,
+          item.expires !== null
+            ? String(+item.expires - this.#baseDateTime)
+            : "",
+        ].join("-");
+        const value = item.value;
+
+        kvs[key] = value;
+      }
+    }
+    if (isEmpty(kvs)) {
+      this.storage.removeItem(id);
+    } else {
+      this.storage.setItem(id, JSON.stringify(kvs));
+    }
+  }
 }
 
-export { DefaultStorage };
+export default WebStorage;

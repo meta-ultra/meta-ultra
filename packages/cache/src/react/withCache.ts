@@ -9,7 +9,10 @@ import {
 } from "react";
 import { useCache } from "./CacheContext";
 
-const withCache = (Component: ComponentType, fallback: ReactElement | null = null): FC => {
+const withCache = (
+  Component: ComponentType,
+  fallback: ReactElement | null = null
+): FC => {
   const ComponentWithCache = <P extends object>(props: P) => {
     const [ready, setReady] = useState(false);
     const cache = useCache();
@@ -18,7 +21,11 @@ const withCache = (Component: ComponentType, fallback: ReactElement | null = nul
     }, [cache]);
 
     return ready
-      ? createElement(Component, props, (props as { children: ReactNode })["children"])
+      ? createElement(
+          Component,
+          props,
+          (props as { children: ReactNode })["children"]
+        )
       : fallback;
   };
   ComponentWithCache.displayName =
@@ -27,4 +34,4 @@ const withCache = (Component: ComponentType, fallback: ReactElement | null = nul
   return ComponentWithCache;
 };
 
-export { withCache };
+export default withCache;

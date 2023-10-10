@@ -1,2 +1,2 @@
 export { useCache, CacheProvider } from "./CacheContext";
-export { withCache } from "./withCache";
+export { default as withCache } from "./withCache";

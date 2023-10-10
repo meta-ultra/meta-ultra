@@ -4,7 +4,6 @@ const svgToMiniDataURI = require("mini-svg-data-uri");
 const SpriteLoaderPlugin = require("svg-sprite-loader/plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin");
-const { merge } = require("webpack-merge");
 
 module.exports = {
   mode: "production",

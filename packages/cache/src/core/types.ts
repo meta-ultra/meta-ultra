@@ -1,7 +1,7 @@
 interface Configuration {
   id?: string;
   storage?: Storage;
-  serializeInterval?: number;
+  persistInterval?: number;
 }
 
 interface CacheItem {
@@ -16,7 +16,7 @@ interface Option {
 
 interface Storage {
   initialize(id: string): Promise<Map<string, CacheItem>>;
-  save(id: string, cache: Map<string, CacheItem>): void;
+  persist(id: string, cache: Map<string, CacheItem>): void;
 }
 
 export type { Configuration, CacheItem, Option, Storage };

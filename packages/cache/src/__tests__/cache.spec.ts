@@ -16,7 +16,7 @@ describe("Cache#get", () => {
 
   it("should throw an error when cache instance is initializing", () => {
     const storage = {
-      save(id: string, cache: Map<string, CacheItem>): void {
+      persist(id: string, cache: Map<string, CacheItem>): void {
         //
       },
       initialize(id: string): Promise<Map<string, CacheItem>> {
@@ -111,7 +111,7 @@ describe("Cache#set", () => {
 
   it("should throw an error when cache instance is initializing", () => {
     const storage = {
-      save(id: string, cache: Map<string, CacheItem>): void {
+      persist(id: string, cache: Map<string, CacheItem>): void {
         //
       },
       initialize(id: string): Promise<Map<string, CacheItem>> {
@@ -146,7 +146,7 @@ describe("Cache#remove", () => {
 
   it("should throw an error when cache instance is initializing", () => {
     const storage = {
-      save(id: string, cache: Map<string, CacheItem>): void {
+      persist(id: string, cache: Map<string, CacheItem>): void {
         //
       },
       initialize(id: string): Promise<Map<string, CacheItem>> {
@@ -179,7 +179,7 @@ describe("Cache#onReady", () => {
 
   it("execute callbacks after 1000ms", (done) => {
     const storage = {
-      save(id: string, cache: Map<string, CacheItem>): void {
+      persist(id: string, cache: Map<string, CacheItem>): void {
         //
       },
       initialize(id: string): Promise<Map<string, CacheItem>> {

@@ -1,10 +1,11 @@
 {
-  "name": "@meta-ultra/cache",
-  "version": "0.1.8",
-  "description": "Meta Ultra Cache",
+  "name": "@meta-ultra/cache-taro",
+  "version": "0.1.0",
+  "description": "Meta Ultra Cache for Taro",
   "keywords": [
     "react",
     "cache",
+    "taro",
     "Meta Ultra"
   ],
   "scripts": {
@@ -103,12 +104,12 @@
     "yaml-loader": "^0.8.0"
   },
   "dependencies": {
-    "@tarojs/taro": "3.6.16",
+    "@meta-ultra/cache": "workspace:*",
     "core-js": "^3.31.0",
     "core-js-pure": "^3.31.0",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "@tarojs/taro": "3.6.16"
   }
 }
