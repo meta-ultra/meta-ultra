@@ -6,6 +6,7 @@ const dev = {
   output: {
     filename: "[name].development.js",
   },
+  devtool: "eval-cheap-module-source-map",
 };
 const prod = {
   mode: "production",
@@ -17,7 +18,8 @@ const configs = [dev, prod];
 
 const common = {
   entry: {
-    index: "./src/index.ts",
+    "cache.full": "./src/index.ts",
+    "cache.core": "./src/index.core.ts",
   },
   output: {
     path: path.resolve("./dist/cjs"),
@@ -39,12 +41,7 @@ const common = {
       },
     ],
   },
-  externals: [
-    /^react\/.+$/,
-    /^react$/,
-    /^@tarojs\/taro\/.+$/,
-    /^@tarojs\/taro$/,
-  ],
+  externals: [/^react\/.+$/, /^react$/],
 };
 
 module.exports = configs.map((config) => merge(common, config));

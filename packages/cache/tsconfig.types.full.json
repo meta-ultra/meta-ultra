@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false, // whether to suppress TypesScript generating code during the compilation process.
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "isolatedModules": false,
+    "outFile": "./dist/cjs/_cache.full.d.ts"
+  },
+  "include": [
+    "./src/index.ts"
+  ]
+}

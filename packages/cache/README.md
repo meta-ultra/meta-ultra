@@ -14,11 +14,11 @@ A strong and boost cache module belongs to Meta Ultra versatile solution.
 
    ```ts
    // in file `./src/cache.ts`
-   import { Cache, DefaultStorage } from "@meta-ultra/cache"
+   import { Cache, WebStorage } from "@meta-ultra/cache"
 
    const cache = new Cache({
-     storage: new DefaultStorage(),
-     serializeInterval: 1000 // persist the serialized cache content every 1000 milliseconds.
+     storage: new WebStorage(),
+     persistInterval: 1000 // persist the serialized cache content every 1000 milliseconds.
    })
 
    export default cache
@@ -60,17 +60,14 @@ A strong and boost cache module belongs to Meta Ultra versatile solution.
 - Constructor `new Cache(configuration: Configuration)`
   - The `Configuration` type
     - `id` defaults to `MetaUltra`, it's used to identify the project
-    - `maxCount` wait to implement
-    - `maxSize` wait to implement
-    - `strategy` wait to implement
     - `storage` specify where to persist on
-    - `serializeInteral` work with `storage`, specify how long to save the serialized cache to the store in milliseconds.
+    - `persistInteral` work with `storage`, specify how long to save the serialized cache to the store in milliseconds.
 - `onReady(cb: () => void)` the callback function would be invoked when the cache instance has initialized.
 - `get<R>(key: string): undefined | R` get value from cache
 - `set(key: string, value: unknown, option?: Option | number): void` set a value in cache
-- `remove(key: string)` remove a entry from cache
+- `remove(key: string | string[])` remove a entry from cache
 - `dispose()` destroy the cache
 
-### The `DefaultStorage` class
+### The `WebStorage` class
 
 It save the cache in the LocalStorage under the hood.

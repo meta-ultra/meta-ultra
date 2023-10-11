@@ -8,18 +8,23 @@
     "Meta Ultra"
   ],
   "scripts": {
-    "build": "pnpm run \"/^build:.*/\"",
-    "build:cjs": "webpack",
-    "build:type": "rimraf ./dist/types && tsc -P ./tsconfig.types.json",
-    "test": "jest"
+    "clean": "rimraf ./dist",
+    "test": "jest",
+    "build": "pnpm clean && pnpm run \"/^build:.*/\"",
+    "build:cjs": "webpack & pnpm copy:cjs",
+    "build:types": "tsc -P ./tsconfig.types.full.json & tsc -P ./tsconfig.types.core.json & pnpm copy:types",
+    "copy:cjs": "cpy ./src/__dist__/cjs/cache.{full,core}.js ./dist/cjs/ --flat",
+    "copy:types": "cpy ./src/__dist__/cjs/cache.{full,core}.d.ts ./dist/cjs/ --flat"
   },
   "author": "fsjohnhuang",
   "license": "MIT",
-  "main": "./dist/cjs/index.js",
-  "types": "./dist/types",
+  "typings": "./dist/cjs/cache.full.d.ts",
+  "exports": {
+    ".": "./dist/cjs/cache.full.js",
+    "./dist/cjs/cache.core": "./dist/cjs/cache.core.js"
+  },
   "files": [
-    "dist/**/*",
-    "types/**/*"
+    "dist/**/*"
   ],
   "sideEffects": false,
   "browserslist": {
@@ -57,6 +62,7 @@
     "ansi-html-community": "^0.0.8",
     "babel-loader": "^9.1.2",
     "copy-webpack-plugin": "^11.0.0",
+    "cpy-cli": "^5.0.0",
     "css-loader": "^6.8.1",
     "css-minimizer-webpack-plugin": "^5.0.1",
     "eslint": "^8.42.0",

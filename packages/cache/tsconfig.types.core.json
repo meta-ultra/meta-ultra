@@ -4,6 +4,10 @@
     "noEmit": false, // whether to suppress TypesScript generating code during the compilation process.
     "declaration": true,
     "emitDeclarationOnly": true,
-    "declarationDir": "./dist/types"
-  }
+    "isolatedModules": false,
+    "outFile": "./dist/cjs/_cache.core.d.ts"
+  },
+  "include": [
+    "./src/index.core.ts"
+  ]
 }
