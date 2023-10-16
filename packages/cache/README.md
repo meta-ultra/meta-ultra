@@ -1,6 +1,6 @@
 # Meta Ultra Cache
 
-A strong and boost cache module belongs to Meta Ultra versatile solution.
+Meta Ultra Cache is a robust standalone cache library, supporting persistence in WebStorage or IndexDB with configurable LRU, LFU or TinyLFU strategy.
 
 ## Setup
 

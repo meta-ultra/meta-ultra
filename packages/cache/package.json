@@ -1,6 +1,6 @@
 {
   "name": "@meta-ultra/cache",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "Meta Ultra Cache",
   "keywords": [
     "react",
@@ -13,8 +13,8 @@
     "build": "pnpm clean && pnpm run \"/^build:.*/\"",
     "build:cjs": "webpack & pnpm copy:cjs",
     "build:types": "tsc -P ./tsconfig.types.full.json & tsc -P ./tsconfig.types.core.json & pnpm copy:types",
-    "copy:cjs": "cpy ./src/public/cjs/cache.{full,core}.js ./dist/cjs/ --flat",
-    "copy:types": "cpy ./src/public/cjs/cache.*.d.ts ./dist/cjs/ --flat"
+    "copy:cjs": "cpy ./public/cjs/cache.{full,core}.js ./dist/cjs/ --flat",
+    "copy:types": "cpy ./public/cjs/cache.*.d.ts ./dist/cjs/ --flat"
   },
   "author": "fsjohnhuang",
   "license": "MIT",

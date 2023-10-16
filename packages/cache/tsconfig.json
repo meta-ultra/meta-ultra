@@ -11,8 +11,8 @@
     "allowJs": true, // whether to allow JavaScript files to be compiled, process and infer types from JS files.
     "experimentalDecorators": true, // enable decorator syntax like `@observable num = 1`
     "allowSyntheticDefaultImports": false, // allow default imports from modules with no default export in the type checking process.
-    "skipLibCheck": true, // skip type checking of all the type declaration files(*.d.ts).
     "esModuleInterop": false, // enables compatibility with Babel, import non-ES modules as default imports.
+    "skipLibCheck": true, // skip type checking of all the type declaration files(*.d.ts).
     "strict": true, // set the level of type checking to strict mode which is very high, like strictNullChecks and noImplicitAny.
     "alwaysStrict": true,
     "strictBindCallApply": true,
@@ -35,7 +35,7 @@
   },
   "include": [
     "src",
-    "src/__tests__", "../../taro",
+    "public/cjs",
   ], // files and folders for TypeScript type checking.
   "exclude": [
     "dist",
