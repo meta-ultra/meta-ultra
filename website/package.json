@@ -1,7 +1,7 @@
 {
-  "name": "managment",
+  "name": "@meta-ultra/website",
   "version": "1.0.0",
-  "description": "yingke managment system",
+  "description": "website for testing",
   "scripts": {
     "dev": "webpack serve --env development",
     "build": "webpack --env production",
@@ -122,6 +122,7 @@
     "@formily/core": "^2.2.27",
     "@formily/react": "^2.2.27",
     "@meta-ultra/cache": "workspace:^",
+    "@meta-ultra/taro-cache": "workspace:^",
     "@meta-ultra/ui": "workspace:^",
     "antd": "^5.6.4",
     "axios": "^1.4.0",
