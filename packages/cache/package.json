@@ -13,15 +13,17 @@
     "build": "pnpm clean && pnpm run \"/^build:.*/\"",
     "build:cjs": "webpack & pnpm copy:cjs",
     "build:types": "tsc -P ./tsconfig.types.full.json & tsc -P ./tsconfig.types.core.json & pnpm copy:types",
-    "copy:cjs": "cpy ./src/__dist__/cjs/cache.{full,core}.js ./dist/cjs/ --flat",
-    "copy:types": "cpy ./src/__dist__/cjs/cache.{full,core}.d.ts ./dist/cjs/ --flat"
+    "copy:cjs": "cpy ./src/public/cjs/cache.{full,core}.js ./dist/cjs/ --flat",
+    "copy:types": "cpy ./src/public/cjs/cache.*.d.ts ./dist/cjs/ --flat"
   },
   "author": "fsjohnhuang",
   "license": "MIT",
   "typings": "./dist/cjs/cache.full.d.ts",
   "exports": {
     ".": "./dist/cjs/cache.full.js",
-    "./dist/cjs/cache.core": "./dist/cjs/cache.core.js"
+    "./dist/cjs/cache.core": "./dist/cjs/cache.core.js",
+    "./dist/cjs/cache.core.development": "./dist/cjs/cache.core.development.js",
+    "./dist/cjs/cache.core.production": "./dist/cjs/cache.core.production.js"
   },
   "files": [
     "dist/**/*"
@@ -109,9 +111,9 @@
     "yaml-loader": "^0.8.0"
   },
   "dependencies": {
-    "@tarojs/taro": "3.6.16",
     "core-js": "^3.31.0",
     "core-js-pure": "^3.31.0",
+    "lodash": "^4.17.21",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {

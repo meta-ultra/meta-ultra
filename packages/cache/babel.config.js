@@ -5,7 +5,7 @@ module.exports = {
       {
         useBuiltIns: "usage",
         corejs: 3,
-        modules: false,
+        modules: "cjs",
       },
     ],
     [
@@ -25,7 +25,7 @@ module.exports = {
     [
       "@babel/plugin-transform-runtime",
       {
-        useESModules: true,
+        useESModules: false,
         corejs: 3,
       },
     ],

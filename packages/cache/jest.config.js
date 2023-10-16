@@ -18,8 +18,8 @@ module.exports = {
     "**/__test(s)?__/**/*.(ts|tsx|js|jsx)",
   ],
   // collect coverage information or not, defaults to false.
-  collectCoverage: true,
-  // coverageDirectory: "test/coverage", // where to output the coverage information files
+  collectCoverage: false,
+  // coverageDirectory: "test/coverage", // where to output the coverage information files, defualts to <rootDir>/coverage
   transform: {
     "^.+\\.ts$": ["ts-jest", { tsconfig: "tsconfig.json" }],
   },
