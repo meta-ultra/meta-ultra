@@ -36,6 +36,8 @@ interface TableSectionProps<
   >;
   readonly dataSource?: RecordType[];
   expandable?: TableProps<RecordType>["expandable"];
+  minScrollX?: number;
+  bordered?: boolean;
 }
 
 const TableSection = <
@@ -58,6 +60,8 @@ const TableSection = <
   pageSize,
   onPaginationChange,
   expandable,
+  minScrollX = 400,
+  bordered,
 }: TableSectionProps<RecordType, ContextType, ExtendedColumnType>) => {
   const { width: screenWidth, height: screenHeight } = useWindowResize();
   const [remainingDimensions, setRemainingDimensions] = useState({
@@ -95,28 +99,36 @@ const TableSection = <
   // configuration for "scroll" property of Table component
   const sectionRef = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
-    if (sectionRef.current) {
-      let invisibleHeight = 0;
-      if (sectionRef.current.parentElement) {
-        invisibleHeight =
-          sectionRef.current.parentElement.scrollHeight -
-          sectionRef.current.parentElement.offsetHeight;
-      }
-      const header =
-        sectionRef.current.querySelector<HTMLDivElement>(".ant-table-header");
-      const headerHeight = header ? header.offsetHeight : 0;
+    const handle = () => {
+      if (sectionRef.current) {
+        let invisibleHeight = 0;
+        if (sectionRef.current.parentElement) {
+          invisibleHeight =
+            sectionRef.current.parentElement.scrollHeight -
+            sectionRef.current.parentElement.offsetHeight;
+        }
+        const header =
+          sectionRef.current.querySelector<HTMLDivElement>(".ant-table-header");
+        const headerHeight = header ? header.offsetHeight : 0;
 
-      setRemainingDimensions({
-        x: sectionRef.current.offsetWidth,
-        y: sectionRef.current.offsetHeight - headerHeight - invisibleHeight,
-      });
+        setRemainingDimensions({
+          x: sectionRef.current.offsetWidth,
+          y: sectionRef.current.offsetHeight - headerHeight - invisibleHeight,
+        });
+      }
+    };
+
+    if (bordered) {
+      setTimeout(handle, 100); // TODO: why the offsetHeight of header would be larger than expected
+    } else {
+      handle();
     }
-  }, [recalculateScroll, screenWidth, screenHeight]);
+  }, [recalculateScroll, screenWidth, screenHeight, bordered]);
 
   const paginationVisible = !!pagination;
   const scroll = useMemo(() => {
     return {
-      x: Math.max(remainingDimensions.x - 25, 400),
+      x: Math.max(remainingDimensions.x - 25, minScrollX),
       y: remainingDimensions.y - (paginationVisible ? 70 : 0),
     };
   }, [remainingDimensions, paginationVisible]);

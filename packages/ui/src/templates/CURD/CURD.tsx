@@ -392,6 +392,7 @@ const CURD = <
           <ButtonCreate key="create" onClick={handleCreateClick} />
           <ButtonUpdate key="update" onClick={handleUpdateClick} />
           <ButtonDelete key="delete" onClick={handleDeleteRecords} />
+          {props.queryButtons}
         </>
       ),
       context: merge(
@@ -610,6 +611,7 @@ const CURD = <
             props.tableTotal === undefined ? undefined : handlePaginationChange
           }
           expandable={props.tableExpandable}
+          minScrollX={props.tableMinScrollX}
         />
       </div>
       {/* Dialog for creation */}

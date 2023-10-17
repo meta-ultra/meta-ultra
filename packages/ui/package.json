@@ -3,9 +3,12 @@
   "version": "0.1.2",
   "description": "Meta Ultra UI",
   "scripts": {
-    "build": "pnpm run \"/^build:.*/\"",
+    "dev": "pnpm \"/^dev:.*/\"",
+    "dev:cjs": "webpack --watch --env development",
+    "dev:types": "tsc --watch -P ./tsconfig.types.json",
+    "build": "pnpm \"/^build:.*/\"",
     "build:cjs": "webpack",
-    "build:type": "rimraf ./dist/types && tsc -P ./tsconfig.types.json"
+    "build:types": "rimraf ./dist/types && tsc -P ./tsconfig.types.json"
   },
   "exports": {
     ".": {
@@ -20,7 +23,7 @@
     "dist/**"
   ],
   "main": "./dist/cjs/index.js",
-  "types": "./dist/types",
+  "types": "./dist/types/index.d.ts",
   "author": "fsjohnhuang",
   "license": "ISC",
   "browserslist": {
