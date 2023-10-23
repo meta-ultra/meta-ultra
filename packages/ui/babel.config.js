@@ -31,9 +31,6 @@ module.exports = {
     ],
   ],
   env: {
-    development: {
-      plugins: ["react-hot-loader/babel"],
-    },
     production: {
       plugins: ["@babel/plugin-transform-react-constant-elements"],
     },

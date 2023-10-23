@@ -5,8 +5,8 @@ const SpriteLoaderPlugin = require("svg-sprite-loader/plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin");
 
-module.exports = {
-  mode: "development",
+module.exports = (env) => ({
+  mode: env.production ? "production" : "development",
   entry: {
     index: {
       import: "./src/index.ts",
@@ -162,4 +162,4 @@ module.exports = {
       },
     }),
   ],
-};
+});

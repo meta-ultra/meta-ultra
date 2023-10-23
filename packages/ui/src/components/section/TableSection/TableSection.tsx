@@ -119,7 +119,7 @@ const TableSection = <
     };
 
     if (bordered) {
-      setTimeout(handle, 100); // TODO: why the offsetHeight of header would be larger than expected
+      setTimeout(handle, 80); // TODO: why the offsetHeight of header would be larger than expected
     } else {
       handle();
     }
