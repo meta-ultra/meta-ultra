@@ -25,6 +25,7 @@
     "./dist/cjs/cache.core.development": "./dist/cjs/cache.core.development.js",
     "./dist/cjs/cache.core.production": "./dist/cjs/cache.core.production.js"
   },
+  "main": "./dist/cjs/cache.full.js",
   "files": [
     "dist/**/*"
   ],
