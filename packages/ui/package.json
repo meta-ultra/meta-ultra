@@ -24,7 +24,7 @@
   },
   "typings": "./dist/types/index.d.ts",
   "sideEffects": [
-    "./src/**/*.css"
+    "**/*.css"
   ],
   "files": [
     "dist/**"
@@ -130,7 +130,6 @@
     "yup": "^1.2.0"
   },
   "peerDependencies": {
-    "@ant-design/cssinjs": "^1.11.1",
     "@meta-ultra/cache": "workspace:^",
     "antd": "^5.6.4",
     "react": "^18.2.0",

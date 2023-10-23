@@ -232,223 +232,6 @@ importers:
         specifier: ^0.8.0
         version: 0.8.0
 
-  packages/cache-taro:
-    dependencies:
-      '@meta-ultra/cache':
-        specifier: workspace:*
-        version: 'link:'
-      '@tarojs/taro':
-        specifier: 3.6.16
-        version: 3.6.16(@types/react@18.2.9)(postcss@8.4.30)
-      core-js:
-        specifier: ^3.31.0
-        version: 3.31.0
-      core-js-pure:
-        specifier: ^3.31.0
-        version: 3.31.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-    devDependencies:
-      '@babel/core':
-        specifier: ^7.22.5
-        version: 7.22.5
-      '@babel/plugin-transform-react-constant-elements':
-        specifier: ^7.22.5
-        version: 7.22.5(@babel/core@7.22.5)
-      '@babel/plugin-transform-runtime':
-        specifier: ^7.22.5
-        version: 7.22.5(@babel/core@7.22.5)
-      '@babel/preset-env':
-        specifier: ^7.22.5
-        version: 7.22.5(@babel/core@7.22.5)
-      '@babel/preset-react':
-        specifier: ^7.22.5
-        version: 7.22.5(@babel/core@7.22.5)
-      '@babel/preset-typescript':
-        specifier: ^7.22.5
-        version: 7.22.5(@babel/core@7.22.5)
-      '@babel/runtime-corejs3':
-        specifier: ^7.22.5
-        version: 7.22.5
-      '@svgr/webpack':
-        specifier: ^8.0.1
-        version: 8.0.1(typescript@5.1.3)
-      '@testing-library/react':
-        specifier: ^14.0.0
-        version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
-      '@types/jest':
-        specifier: ^29.5.5
-        version: 29.5.5
-      '@types/lodash-es':
-        specifier: ^4.17.7
-        version: 4.17.7
-      '@types/node':
-        specifier: ^20.2.5
-        version: 20.2.5
-      '@types/react':
-        specifier: ^18.2.9
-        version: 18.2.9
-      '@types/react-document-title':
-        specifier: ^2.0.5
-        version: 2.0.5
-      '@types/react-dom':
-        specifier: ^18.2.5
-        version: 18.2.5
-      '@types/react-is':
-        specifier: ^18.2.1
-        version: 18.2.1
-      '@types/webpack-env':
-        specifier: ^1.18.1
-        version: 1.18.1
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^5.59.9
-        version: 5.59.9(@typescript-eslint/parser@5.59.9)(eslint@8.42.0)(typescript@5.1.3)
-      '@typescript-eslint/parser':
-        specifier: ^5.59.9
-        version: 5.59.9(eslint@8.42.0)(typescript@5.1.3)
-      ansi-html-community:
-        specifier: ^0.0.8
-        version: 0.0.8
-      babel-loader:
-        specifier: ^9.1.2
-        version: 9.1.2(@babel/core@7.22.5)(webpack@5.86.0)
-      copy-webpack-plugin:
-        specifier: ^11.0.0
-        version: 11.0.0(webpack@5.86.0)
-      css-loader:
-        specifier: ^6.8.1
-        version: 6.8.1(webpack@5.86.0)
-      css-minimizer-webpack-plugin:
-        specifier: ^5.0.1
-        version: 5.0.1(webpack@5.86.0)
-      eslint:
-        specifier: ^8.42.0
-        version: 8.42.0
-      eslint-config-prettier:
-        specifier: ^8.8.0
-        version: 8.8.0(eslint@8.42.0)
-      eslint-plugin-react:
-        specifier: ^7.32.2
-        version: 7.32.2(eslint@8.42.0)
-      eslint-plugin-react-hooks:
-        specifier: ^4.6.0
-        version: 4.6.0(eslint@8.42.0)
-      eslint-webpack-plugin:
-        specifier: ^4.0.1
-        version: 4.0.1(eslint@8.42.0)(webpack@5.86.0)
-      events:
-        specifier: ^3.3.0
-        version: 3.3.0
-      fast-levenshtein:
-        specifier: ^3.0.0
-        version: 3.0.0
-      fastest-levenshtein:
-        specifier: ^1.0.16
-        version: 1.0.16
-      file-loader:
-        specifier: ^6.2.0
-        version: 6.2.0(webpack@5.86.0)
-      hoist-non-react-statics:
-        specifier: ^3.3.2
-        version: 3.3.2
-      html-entities:
-        specifier: ^2.3.6
-        version: 2.3.6
-      html-webpack-plugin:
-        specifier: ^5.5.3
-        version: 5.5.3(webpack@5.86.0)
-      http-proxy-middleware:
-        specifier: ^2.0.6
-        version: 2.0.6(@types/express@4.17.18)
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@20.2.5)
-      jest-environment-jsdom:
-        specifier: ^29.7.0
-        version: 29.7.0
-      mini-css-extract-plugin:
-        specifier: ^2.7.6
-        version: 2.7.6(webpack@5.86.0)
-      mini-svg-data-uri:
-        specifier: ^1.4.4
-        version: 1.4.4
-      object-assign:
-        specifier: ^4.1.1
-        version: 4.1.1
-      postcss-html:
-        specifier: ^1.5.0
-        version: 1.5.0
-      postcss-loader:
-        specifier: ^7.3.3
-        version: 7.3.3(postcss@8.4.30)(typescript@5.1.3)(webpack@5.86.0)
-      postcss-preset-env:
-        specifier: ^8.4.2
-        version: 8.4.2(postcss@8.4.30)
-      prettier:
-        specifier: 2.8.8
-        version: 2.8.8
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
-      react-is:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-lifecycles-compat:
-        specifier: ^3.0.4
-        version: 3.0.4
-      rimraf:
-        specifier: ^5.0.1
-        version: 5.0.1
-      shallowequal:
-        specifier: ^1.1.0
-        version: 1.1.0
-      style-loader:
-        specifier: ^3.3.3
-        version: 3.3.3(webpack@5.86.0)
-      stylelint:
-        specifier: ^15.7.0
-        version: 15.7.0(typescript@5.1.3)
-      stylelint-config-prettier:
-        specifier: ^9.0.5
-        version: 9.0.5(stylelint@15.7.0)
-      stylelint-config-standard:
-        specifier: ^33.0.0
-        version: 33.0.0(stylelint@15.7.0)
-      stylelint-order:
-        specifier: ^6.0.3
-        version: 6.0.3(stylelint@15.7.0)
-      svg-sprite-loader:
-        specifier: ^6.0.11
-        version: 6.0.11
-      svgo-loader:
-        specifier: ^4.0.0
-        version: 4.0.0
-      ts-jest:
-        specifier: ^29.1.1
-        version: 29.1.1(@babel/core@7.22.5)(jest@29.7.0)(typescript@5.1.3)
-      typescript:
-        specifier: ^5.1.3
-        version: 5.1.3
-      url-loader:
-        specifier: ^4.1.1
-        version: 4.1.1(file-loader@6.2.0)(webpack@5.86.0)
-      webpack:
-        specifier: ^5.86.0
-        version: 5.86.0(webpack-cli@5.1.4)
-      webpack-cli:
-        specifier: ^5.1.4
-        version: 5.1.4(webpack-dev-server@4.15.1)(webpack@5.86.0)
-      webpack-dev-server:
-        specifier: ^4.15.1
-        version: 4.15.1(webpack-cli@5.1.4)(webpack@5.86.0)
-      webpack-merge:
-        specifier: ^5.9.0
-        version: 5.9.0
-      yaml-loader:
-        specifier: ^0.8.0
-        version: 0.8.0
-
   packages/taro-cache:
     dependencies:
       '@meta-ultra/cache':
@@ -723,6 +506,9 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
     devDependencies:
+      '@ant-design/cssinjs':
+        specifier: ^1.11.1
+        version: 1.11.1(react-dom@18.2.0)(react@18.2.0)
       '@babel/core':
         specifier: ^7.22.5
         version: 7.22.5
@@ -1316,7 +1102,6 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       stylis: 4.3.0
-    dev: false
 
   /@ant-design/icons-svg@4.3.1:
     resolution: {integrity: sha512-4QBZg8ccyC6LPIRii7A0bZUk3+lEDCLnhB+FVsflGdcWPPmV+j3fire4AwwoqHV/BibgvBmR9ZIo4s867smv+g==}
@@ -3257,11 +3042,9 @@ packages:
 
   /@emotion/hash@0.8.0:
     resolution: {integrity: sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==}
-    dev: false
 
   /@emotion/unitless@0.7.5:
     resolution: {integrity: sha512-OWORNpfjMsSSUBVrRBVGECkhWcULOAJz9ZW8uK9qgxD+87M7jHRcvh/A96XXNhXTLmKcoYSQtBEX7lHMO7YRwg==}
-    dev: false
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.42.0):
     resolution: {integrity: sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==}
@@ -5704,7 +5487,6 @@ packages:
 
   /classnames@2.3.2:
     resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
-    dev: false
 
   /clean-css@5.3.2:
     resolution: {integrity: sha512-JVJbM+f3d3Q704rF4bqQ5UUyTtuJ0JRKNbTKVEeujCCBoMdkEi+V+e8oktO9qGQNSvHrFTM6JZRXrUvGR1czww==}
@@ -12130,7 +11912,6 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-is: 16.13.1
-    dev: false
 
   /rc-virtual-list@3.11.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-QKhksqvzKw63D8oVxAtnc82sWeyWZd135k67jVbf3cy42gz+r1Znt8ZCziveFWTqEYUVWnvjHTlEbc6lO0mkKg==}
@@ -13318,7 +13099,6 @@ packages:
 
   /stylis@4.3.0:
     resolution: {integrity: sha512-E87pIogpwUsUwXw7dNyU4QDjdgVMy52m+XEOPEKUn161cCzWjjhPSQhByfd1CcNvrOLnXQ6OnnZDwnJrz/Z4YQ==}
-    dev: false
 
   /stylus@0.59.0:
     resolution: {integrity: sha512-lQ9w/XIOH5ZHVNuNbWW8D822r+/wBSO/d6XvtyHLF7LW4KaCIDeVbvn5DF8fGCJAUCwVhVi/h6J0NUcnylUEjg==}
