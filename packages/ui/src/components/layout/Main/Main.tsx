@@ -5,12 +5,24 @@ import "./Main.css";
 interface Tab {
   key: string;
   label: ReactNode;
-  closeIcon: ReactNode;
+  closeIcon?: ReactNode;
 }
 type MainProps = PropsWithChildren<{
+  /**
+   * Required click event on removing icon
+   */
   onRemove: (key: string) => void;
+  /**
+   * Required click event on tab
+   */
   onTabClick: (key: string) => void;
+  /**
+   * Required tabs
+   */
   items: Tab[];
+  /**
+   * Required represent the key of the current active tab
+   */
   activeKey: string;
 }>;
 

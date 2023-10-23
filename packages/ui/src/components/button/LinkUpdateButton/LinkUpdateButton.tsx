@@ -3,8 +3,17 @@ import LinkButton from "../LinkButton/LinkButton";
 import useEvent from "react-use-event-hook";
 
 interface LinkUpdateButtonProps<S> {
+  /**
+   * Optional state value passed to click event handler
+   */
   state?: S;
+  /**
+   * Required button text
+   */
   text: string;
+  /**
+   * Required click event handler
+   */
   onClick: (option: { state?: S }) => void;
 }
 

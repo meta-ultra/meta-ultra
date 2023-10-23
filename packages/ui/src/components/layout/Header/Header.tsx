@@ -5,7 +5,13 @@ import { RxExit } from "react-icons/rx";
 import "./Header.css";
 
 interface HeaderProps {
+  /**
+   * Optional count of notification overlaying on the avatar
+   */
   count?: number;
+  /**
+   * Optional click event for exiting system
+   */
   onExit?: () => void;
 }
 

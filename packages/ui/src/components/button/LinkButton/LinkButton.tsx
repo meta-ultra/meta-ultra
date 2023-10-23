@@ -9,10 +9,25 @@ import classNames from "classnames";
 import "./LinkButton.css";
 
 type LinkButtonProps = PropsWithChildren<{
+  /**
+   * Optional class name
+   */
   className?: string;
+  /**
+   * Optional style object
+   */
   style?: CSSProperties;
+  /**
+   * Optional click handler
+   */
   onClick?: () => void;
+  /**
+   * Optional icon prefixing the children
+   */
   icon?: FunctionComponentElement<{ className: string }>;
+  /**
+   * Optional icon prefixing the children in hover state
+   */
   hoverIcon?: FunctionComponentElement<{ className: string }>;
 }>;
 
@@ -27,17 +42,21 @@ const LinkButton: FC<LinkButtonProps> = ({
   return (
     <a
       onClick={onClick}
-      className={classNames("link-button", className)}
+      className={classNames(
+        "mu-link-button",
+        onClick ? "mu-link--clickable" : undefined,
+        className
+      )}
       style={style}
       title={typeof children == "string" ? children : ""}
     >
       {icon &&
         cloneElement(icon, {
-          className: "link-button__icon",
+          className: "mu-link-button__icon",
         })}
       {hoverIcon &&
         cloneElement(hoverIcon, {
-          className: "link-button__icon",
+          className: "mu-link-button__icon",
         })}
       {children}
     </a>
