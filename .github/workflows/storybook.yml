@@ -4,8 +4,8 @@ on:
     branch:
       - main
     paths:
-      - '**/packages/ui/src'
-      - '**/packages/cache/src'
+      - '.packages/ui/src/**'
+      - './packages/cache/src/**'
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
