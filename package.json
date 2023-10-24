@@ -1,6 +1,16 @@
 {
   "private": true,
+  "scripts": {
+    "commit": "git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "devDependencies": {
+    "commitizen": "4.3.0",
+    "cz-conventional-changelog": "3.3.0",
     "lodash": "^4.17.21"
   }
 }
