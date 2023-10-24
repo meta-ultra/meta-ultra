@@ -1,8 +1,8 @@
-import Dialog, { DialogProps } from "./Dialog";
+import Dialog, { type DialogProps } from "./Dialog";
 import {
   useDialogContext,
   DialogContextProvider,
-  DialogContextType,
+  type DialogContextType,
 } from "./useDialogContext";
 
 const DialogNamespace: typeof Dialog & {
