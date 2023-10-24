@@ -15,10 +15,10 @@ export const Default: Story = {
   args: {
     title: "Admin",
     items: [
-      {
-        key: "dashboard",
-        label: "Dashboard",
-      },
+      // {
+      //   key: "dashboard",
+      //   label: "Dashboard",
+      // },
       {
         key: "users",
         label: "Users",
