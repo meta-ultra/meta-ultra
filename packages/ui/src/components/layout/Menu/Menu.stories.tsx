@@ -16,6 +16,10 @@ export const Default: Story = {
     title: "Admin",
     items: [
       {
+        key: "dashboard",
+        label: "Dashboard",
+      },
+      {
         key: "users",
         label: "Users",
       },
