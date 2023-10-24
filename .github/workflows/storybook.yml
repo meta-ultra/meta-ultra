@@ -1,18 +1,24 @@
-name: Build Storybook
+name: Build and Deploy Storybook
 on:
   push:
     branch:
       - main
+    paths:
+      - '**/packages/ui/src'
+      - '**/packages/cache/src'
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - uses: pnpm/action-setup@v2
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup NodeJS environment
+        uses: actions/setup-node@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
         with:
           version: 8
       - name: Install dependencies
         run: pnpm i
-      - name: Build storybook
+      - name: Build and deploy storybook
         run: pnpm build-storybook
