@@ -14,8 +14,17 @@ interface MenuItem {
 }
 
 interface MenuItemsProps {
+  /**
+   * Required click event on menu item
+   */
   onSelect: (key: string) => void;
+  /**
+   * Requried menu items
+   */
   items: MenuItem[];
+  /**
+   * Require selected keys of menu item
+   */
   selectedKeys: string[];
 }
 

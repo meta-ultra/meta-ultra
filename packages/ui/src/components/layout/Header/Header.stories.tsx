@@ -14,4 +14,18 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  render: function Render(args) {
+    return <Header count={args.count} onExit={args.onExit} />;
+  },
+};
+
+export const CustomDropdownMenu: Story = {
+  render: function Render(args) {
+    return (
+      <Header count={args.count} onExit={args.onExit}>
+        <div>Notifications</div>
+      </Header>
+    );
+  },
+};

@@ -9,10 +9,25 @@ import "./Menu.css";
 const Sider = Layout.Sider;
 
 interface MenuProps extends MenuItemsProps {
+  /**
+   * Optional width of expanded menu
+   */
   width?: number;
+  /**
+   * Optional width of collapsed menu
+   */
   collapsedWidth?: number;
+  /**
+   * Optional if collapsed
+   */
   collapsed?: boolean;
-  icon: React.FunctionComponent<{ className?: string; style?: CSSProperties }>;
+  /**
+   * Optional logo
+   */
+  icon?: React.FunctionComponent<{ className?: string; style?: CSSProperties }>;
+  /**
+   * Required title
+   */
   title: string;
 }
 
@@ -31,9 +46,11 @@ const Menu: FC<MenuProps> = ({
     if (collapsed) {
       return (
         <h1 className="mu-menu__header--collapsed">
-          {createElement(icon, {
-            className: "mu-menu__header--collapsed__icon",
-          })}
+          {icon
+            ? createElement(icon, {
+                className: "mu-menu__header--collapsed__icon",
+              })
+            : null}
         </h1>
       );
     } else {
@@ -42,9 +59,11 @@ const Menu: FC<MenuProps> = ({
           className="mu-menu__header--expanded"
           style={{ lineHeight: "36px" }}
         >
-          {createElement(icon, {
-            className: "mu-menu__header--expanded__icon",
-          })}
+          {icon
+            ? createElement(icon, {
+                className: "mu-menu__header--expanded__icon",
+              })
+            : null}
           {title}
         </h1>
       );
