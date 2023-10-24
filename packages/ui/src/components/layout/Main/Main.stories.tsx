@@ -4,7 +4,7 @@ import Main, { type Tab } from "./Main";
 import { useMemo } from "react";
 
 const meta: Meta<typeof Main> = {
-  title: "Components/layout/Main",
+  title: "ui/Components/layout/Main",
   component: Main,
   parameters: {
     layout: "centered",

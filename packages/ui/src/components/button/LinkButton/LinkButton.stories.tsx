@@ -3,7 +3,7 @@ import LinkButton from "./LinkButton";
 import { RiDeleteBin5Line, RiDeleteBin5Fill } from "react-icons/ri";
 
 const meta: Meta<typeof LinkButton> = {
-  title: "Components/button/LinkButton",
+  title: "ui/Components/button/LinkButton",
   component: LinkButton,
   parameters: {
     layout: "centered",

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import LinkDeleteButton from "./LinkDeleteButton";
 
 const meta: Meta<typeof LinkDeleteButton> = {
-  title: "Components/button/LinkDeleteButton",
+  title: "ui/Components/button/LinkDeleteButton",
   component: LinkDeleteButton,
   parameters: {
     layout: "centered",

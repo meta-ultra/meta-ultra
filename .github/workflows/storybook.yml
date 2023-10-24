@@ -1,0 +1,15 @@
+name: Build Storybook
+on:
+  push:
+    branch:
+      - main
+jobs:
+  build:
+    run-at: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: pnpm i
+      - name: Build storybook
+        run: pnpm build-storybook
