@@ -19,6 +19,10 @@ export const Default: Story = {
         key: "users",
         label: "Users",
       },
+      {
+        key: "roles",
+        label: "Roles",
+      },
     ],
   },
 };
