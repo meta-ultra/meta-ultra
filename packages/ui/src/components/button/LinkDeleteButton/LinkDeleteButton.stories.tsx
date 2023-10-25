@@ -16,6 +16,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Delete: Story = {
   args: {
-    text: "Delete1",
+    text: "Delete",
   },
 };

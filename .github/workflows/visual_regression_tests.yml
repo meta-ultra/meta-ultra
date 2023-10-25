@@ -23,4 +23,4 @@ jobs:
       - name: Visual regression tests
         env:
           CHROMATIC_TOKEN: ${{ secrets.CHROMATIC_TOKEN }}
-        run: pnpm --filter storybook test:chromatic"
+        run: pnpm --filter storybook test:chromatic
