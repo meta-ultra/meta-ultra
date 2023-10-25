@@ -12,7 +12,9 @@ const ColumnDateTime = <RecordType,>(option: ColumnDateTimeOption<RecordType>) =
       typeof dateTime === "string" || dateTime instanceof Date
         ? dayjs(dateTime as string | Date).format(option.format)
         : dateTime;
-    return option.render ? option.render(result, record, index) : result;
+    return option.render
+      ? option.render(result, record, index)
+      : (result as ReturnType<NonNullable<ColumnDateTimeOption<RecordType>["render"]>>);
   },
 });
 
