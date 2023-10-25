@@ -1,4 +1,4 @@
-name: Build and Deploy Storybook
+name: Visual Regression Tests
 on:
   push:
     branch:
@@ -20,5 +20,7 @@ jobs:
           version: 8
       - name: Install dependencies
         run: pnpm i
-      - name: Build and deploy storybook
-        run: pnpm --filter storybook build-storybook
+      - name: Visual regression tests
+        env:
+          CHROMATIC_TOKEN: ${{ secrets.CHROMATIC_TOKEN }}
+        run: pnpm --filter storybook chromatic --project-token="$CHROMATIC_TOKEN"
