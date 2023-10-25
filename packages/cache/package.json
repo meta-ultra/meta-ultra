@@ -1,6 +1,6 @@
 {
   "name": "@meta-ultra/cache",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Meta Ultra Cache",
   "keywords": [
     "react",
@@ -18,6 +18,7 @@
   },
   "author": "fsjohnhuang",
   "license": "MIT",
+  "main": "./dist/cjs/cache.full.js",
   "typings": "./dist/cjs/cache.full.d.ts",
   "exports": {
     ".": "./dist/cjs/cache.full.js",
@@ -25,7 +26,6 @@
     "./dist/cjs/cache.core.development": "./dist/cjs/cache.core.development.js",
     "./dist/cjs/cache.core.production": "./dist/cjs/cache.core.production.js"
   },
-  "main": "./dist/cjs/cache.full.js",
   "files": [
     "dist/**/*"
   ],
