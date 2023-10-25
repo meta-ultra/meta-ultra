@@ -1,10 +1,7 @@
 import { useRef, useLayoutEffect, useState, Key, useMemo } from "react";
 import { Table, TableProps, TableColumnsType } from "antd";
 import { ContextualTableColumnsType } from "./useTableColumns/useTableColumns";
-import {
-  RecordTypeConstraint,
-  ContextCheckboxType,
-} from "./useTableColumns/types";
+import { RecordTypeConstraint, ContextCheckboxType } from "./useTableColumns/types";
 import useWindowResize from "../../../hooks/useWindowResize";
 import withInitialProps from "../../../hocs/withInitialProps";
 
@@ -29,11 +26,7 @@ interface TableSectionProps<
 
   loading?: boolean;
   recalculateScroll?: unknown;
-  columns: ContextualTableColumnsType<
-    RecordType,
-    ContextType,
-    ExtendedColumnType
-  >;
+  columns: ContextualTableColumnsType<RecordType, ContextType, ExtendedColumnType>;
   readonly dataSource?: RecordType[];
   expandable?: TableProps<RecordType>["expandable"];
   minScrollX?: number;
@@ -107,8 +100,7 @@ const TableSection = <
             sectionRef.current.parentElement.scrollHeight -
             sectionRef.current.parentElement.offsetHeight;
         }
-        const header =
-          sectionRef.current.querySelector<HTMLDivElement>(".ant-table-header");
+        const header = sectionRef.current.querySelector<HTMLDivElement>(".ant-table-header");
         const headerHeight = header ? header.offsetHeight : 0;
 
         setRemainingDimensions({
@@ -118,11 +110,12 @@ const TableSection = <
       }
     };
 
-    if (bordered) {
-      setTimeout(handle, 80); // TODO: why the offsetHeight of header would be larger than expected
-    } else {
-      handle();
-    }
+    // if (bordered) {
+    handle();
+    setTimeout(handle, 1000); // TODO: why the offsetHeight of header would be larger than expected
+    // } else {
+    //   handle();
+    // }
   }, [recalculateScroll, screenWidth, screenHeight, bordered]);
 
   const paginationVisible = !!pagination;
@@ -147,9 +140,7 @@ const TableSection = <
       if (columns.context.checkbox == false) {
         return undefined;
       } else if (columns.context.checkbox) {
-        if (
-          (columns.context.checkbox as { visible?: boolean }).visible == false
-        ) {
+        if ((columns.context.checkbox as { visible?: boolean }).visible == false) {
           return undefined;
         }
 

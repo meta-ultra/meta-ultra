@@ -1,12 +1,5 @@
 import { Key, useState, useRef, useReducer, ReactNode, useEffect } from "react";
-import {
-  FormInstance,
-  Modal,
-  message,
-  Alert,
-  Breadcrumb,
-  BreadcrumbProps,
-} from "antd";
+import { FormInstance, Modal, message, Alert, Breadcrumb, BreadcrumbProps } from "antd";
 import useEvent from "react-use-event-hook";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { isNil, merge } from "lodash-es";
@@ -23,9 +16,7 @@ import {
   statusTableColumnModifier,
 } from "../../components/section/TableSection/useTableColumns/modifiers";
 import { UseTableColumns } from "../../components/section/TableSection/useTableColumns";
-import QuerySection, {
-  QuerySectionProps,
-} from "../../components/section/QuerySection";
+import QuerySection, { QuerySectionProps } from "../../components/section/QuerySection";
 import useElements, {
   UseElements,
   ContextualReactNodesType,
@@ -35,29 +26,16 @@ import { ButtonSearch } from "../../components/section/QuerySection/buttons/Butt
 import { ButtonCreate } from "../../components/section/QuerySection/buttons/ButtonCreate/ButtonCreate";
 import { ButtonDelete } from "../../components/section/QuerySection/buttons/ButtonDelete/ButtonDelete";
 import { ButtonUpdate } from "../../components/section/QuerySection/buttons/ButtonUpdate/ButtonUpdate";
-import {
-  buttonSearchModifier,
-  buttonTextModifier,
-} from "../../hooks/useElements/modifiers";
+import { buttonSearchModifier, buttonTextModifier } from "../../hooks/useElements/modifiers";
 import FormDialog from "../../components/dialog/FormDialog/FormDialog";
 import "./CURD.css";
 
-const {
-  useTableColumns,
-  actionsTableColumnModifier,
-  sortableTableColumnModifier,
-} = TableSection;
+const { useTableColumns, actionsTableColumnModifier, sortableTableColumnModifier } = TableSection;
 
 type CURDQuerySectionProps<FormItemsType extends object, ContextType> = {
-  [P in keyof QuerySectionProps<
-    FormItemsType,
-    ContextType
-  > as P extends "children"
+  [P in keyof QuerySectionProps<FormItemsType, ContextType> as P extends "children"
     ? never
-    : `query${Capitalize<P>}`]: QuerySectionProps<
-    FormItemsType,
-    ContextType
-  >[P];
+    : `query${Capitalize<P>}`]: QuerySectionProps<FormItemsType, ContextType>[P];
 } & {
   queryFormItems?: ReactNode;
   initialQuery?: Record<string, unknown>;
@@ -65,26 +43,17 @@ type CURDQuerySectionProps<FormItemsType extends object, ContextType> = {
 
 type CURDTableSectionProps<
   RecordType extends RecordTypeConstraint,
-  ContextType extends ContextCheckboxType<RecordType> &
-    CURDContextType<RecordType>,
+  ContextType extends ContextCheckboxType<RecordType> & CURDContextType<RecordType>,
   ExtendedColumnType
 > = {
-  [P in keyof TableSectionProps<
-    RecordType,
-    ContextType,
-    ExtendedColumnType
-  > as P extends
+  [P in keyof TableSectionProps<RecordType, ContextType, ExtendedColumnType> as P extends
     | "loading"
     | "recalculateScroll"
     | "onPaginationChange"
     | "page"
     | "pageSize"
     ? never
-    : `table${Capitalize<P>}`]: TableSectionProps<
-    RecordType,
-    ContextType,
-    ExtendedColumnType
-  >[P];
+    : `table${Capitalize<P>}`]: TableSectionProps<RecordType, ContextType, ExtendedColumnType>[P];
 } & {
   tableActionsUpdateText?: string;
   tableActionsDeleteText?: string;
@@ -96,15 +65,10 @@ type CURDProps<
   QueryFormItemsType extends object,
   QueryContextType,
   TableRecordType extends RecordTypeConstraint,
-  TableContextType extends ContextCheckboxType<TableRecordType> &
-    CURDContextType<TableRecordType>,
+  TableContextType extends ContextCheckboxType<TableRecordType> & CURDContextType<TableRecordType>,
   TableExtendedColumnType
 > = CURDQuerySectionProps<QueryFormItemsType, QueryContextType> &
-  CURDTableSectionProps<
-    TableRecordType,
-    TableContextType,
-    TableExtendedColumnType
-  > & {
+  CURDTableSectionProps<TableRecordType, TableContextType, TableExtendedColumnType> & {
     onQuery?: (
       query: Record<string, unknown>,
       pagination: { page: number; pageSize: number }
@@ -139,9 +103,7 @@ type CURDProps<
   };
 
 const useCURDQueryButtons: UseElements<{
-  search?:
-    | boolean
-    | { visible?: boolean; refreshText?: string; searchText?: string };
+  search?: boolean | { visible?: boolean; refreshText?: string; searchText?: string };
   create?: boolean | { visible?: boolean; text?: string };
   update?: boolean | { visible?: boolean; text?: string };
   delete?: boolean | { visible?: boolean; text?: string };
@@ -205,18 +167,14 @@ const pipe = (...fns: PipeFnType[]): PipeFnType | void => {
   if (fns.length == 1) return fns[0];
 
   const [prev, next] = fns.slice(-2);
-  return pipe(
-    ...fns.slice(0, -2),
-    (...args: unknown[]): unknown => prev && prev(next, ...args)
-  );
+  return pipe(...fns.slice(0, -2), (...args: unknown[]): unknown => prev && prev(next, ...args));
 };
 
 const CURD = <
   QueryFormItemsType extends object,
   QueryContextType,
   TableRecordType extends RecordTypeConstraint,
-  TableContextType extends ContextCheckboxType<TableRecordType> &
-    CURDContextType<TableRecordType>,
+  TableContextType extends ContextCheckboxType<TableRecordType> & CURDContextType<TableRecordType>,
   TableExtendedColumnType
 >(
   props: CURDProps<
@@ -277,12 +235,7 @@ const CURD = <
         }
       })();
     }
-  }, [
-    props.onQuery,
-    internalState.query,
-    internalState.pagination,
-    messageApi,
-  ]);
+  }, [props.onQuery, internalState.query, internalState.pagination, messageApi]);
 
   const [loading, setLoading] = useState(false);
   const handleSearch = useEvent(async ({ form }) => {
@@ -311,15 +264,9 @@ const CURD = <
     setSelectedRowKeys(keys);
 
     // cache the single one selected record for modification in the future, which might be not found when go to the next page.
-    if (
-      keys.length == 1 &&
-      props.tableRowKey !== undefined &&
-      props.tableDataSource
-    ) {
+    if (keys.length == 1 && props.tableRowKey !== undefined && props.tableDataSource) {
       const rowKey = props.tableRowKey;
-      editingRecordRef.current = props.tableDataSource.find(
-        (record) => record[rowKey] == keys[0]
-      );
+      editingRecordRef.current = props.tableDataSource.find((record) => record[rowKey] == keys[0]);
     } else {
       editingRecordRef.current = undefined;
     }
@@ -346,19 +293,12 @@ const CURD = <
             : props.deleteConfirmText(state, selectedRowKeys.length)}
         </span>
       ),
-      icon: (
-        <AiOutlineExclamationCircle
-          size={24}
-          className="mu-curd__delete-confirm__icon"
-        />
-      ),
+      icon: <AiOutlineExclamationCircle size={24} className="mu-curd__delete-confirm__icon" />,
       okText: props.deleteOkText,
       cancelText: props.deleteCancelText,
       async onOk() {
         if (props.onDeleteRecords) {
-          const keys = isNil(state)
-            ? selectedRowKeys || []
-            : [state[props.tableRowKey]];
+          const keys = isNil(state) ? selectedRowKeys || [] : [state[props.tableRowKey]];
           try {
             const result = await props.onDeleteRecords(keys);
             dispatch({
@@ -400,15 +340,11 @@ const CURD = <
         {
           update: {
             status:
-              selectedRowKeys.length == 1
-                ? QueryButtonStatus.ENABLE
-                : QueryButtonStatus.DISABLE,
+              selectedRowKeys.length == 1 ? QueryButtonStatus.ENABLE : QueryButtonStatus.DISABLE,
           },
           delete: {
             status:
-              selectedRowKeys.length >= 1
-                ? QueryButtonStatus.ENABLE
-                : QueryButtonStatus.DISABLE,
+              selectedRowKeys.length >= 1 ? QueryButtonStatus.ENABLE : QueryButtonStatus.DISABLE,
           },
         },
         props.queryButtons ? props.queryButtons.context : {}
@@ -484,33 +420,26 @@ const CURD = <
       return {
         context: {
           confirm: {
-            onClick: pipe(
-              async (
-                next: (...values: unknown[]) => unknown,
-                ...values: unknown[]
-              ) => {
-                try {
-                  next && (await next(...values));
-                  createDialogFormRef.current &&
-                    createDialogFormRef.current.resetFields();
-                  dispatch({
-                    type: "PAGINATION/SET",
-                    payload: { ...internalState.pagination },
-                  }); // refresh the table
-                  setCreateDialogVisible(false);
-                  messageApi.open({
-                    type: "success",
-                    content: props.createDialogSuccessText,
-                  });
-                } catch (e) {
-                  messageApi.open({
-                    type: "error",
-                    content: (e as Error).message,
-                  });
-                }
-              },
-              onClick
-            ),
+            onClick: pipe(async (next: (...values: unknown[]) => unknown, ...values: unknown[]) => {
+              try {
+                next && (await next(...values));
+                createDialogFormRef.current && createDialogFormRef.current.resetFields();
+                dispatch({
+                  type: "PAGINATION/SET",
+                  payload: { ...internalState.pagination },
+                }); // refresh the table
+                setCreateDialogVisible(false);
+                messageApi.open({
+                  type: "success",
+                  content: props.createDialogSuccessText,
+                });
+              } catch (e) {
+                messageApi.open({
+                  type: "error",
+                  content: (e as Error).message,
+                });
+              }
+            }, onClick),
           },
         },
       };
@@ -539,33 +468,26 @@ const CURD = <
       return {
         context: {
           confirm: {
-            onClick: pipe(
-              async (
-                next: (...values: unknown[]) => unknown,
-                ...values: unknown[]
-              ) => {
-                try {
-                  next && (await next(...values));
-                  updateDialogFormRef.current &&
-                    updateDialogFormRef.current.resetFields();
-                  setEditingRecord(undefined);
-                  dispatch({
-                    type: "PAGINATION/SET",
-                    payload: { ...internalState.pagination },
-                  }); // refresh the table
-                  messageApi.open({
-                    type: "success",
-                    content: props.updateDialogSuccessText,
-                  });
-                } catch (e) {
-                  messageApi.open({
-                    type: "error",
-                    content: (e as Error).message,
-                  });
-                }
-              },
-              onClick
-            ),
+            onClick: pipe(async (next: (...values: unknown[]) => unknown, ...values: unknown[]) => {
+              try {
+                next && (await next(...values));
+                updateDialogFormRef.current && updateDialogFormRef.current.resetFields();
+                setEditingRecord(undefined);
+                dispatch({
+                  type: "PAGINATION/SET",
+                  payload: { ...internalState.pagination },
+                }); // refresh the table
+                messageApi.open({
+                  type: "success",
+                  content: props.updateDialogSuccessText,
+                });
+              } catch (e) {
+                messageApi.open({
+                  type: "error",
+                  content: (e as Error).message,
+                });
+              }
+            }, onClick),
           },
         },
       };
@@ -607,9 +529,7 @@ const CURD = <
           onSelectedRowKeysChange={handleSelectedRowKeysChange}
           page={internalState.pagination.page}
           pageSize={internalState.pagination.pageSize}
-          onPaginationChange={
-            props.tableTotal === undefined ? undefined : handlePaginationChange
-          }
+          onPaginationChange={props.tableTotal === undefined ? undefined : handlePaginationChange}
           expandable={props.tableExpandable}
           minScrollX={props.tableMinScrollX}
         />
@@ -639,9 +559,7 @@ const CURD = <
         onClose={() => setEditingRecord(undefined)}
         record={editingRecord}
       >
-        {editingRecord && props.updateDialogContent
-          ? props.updateDialogContent
-          : null}
+        {editingRecord && props.updateDialogContent ? props.updateDialogContent : null}
       </FormDialog>
     </>
   );
