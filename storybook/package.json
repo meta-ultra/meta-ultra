@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o ../docs"
+    "build-storybook": "storybook build -o ../docs",
+    "test:chromatic": "chromatic --project-token=\"$CHROMATIC_TOKEN\""
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",

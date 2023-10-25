@@ -7,7 +7,7 @@ on:
       - "packages/ui/src/**"
       - "packages/cache/src/**"
 jobs:
-  build-and-deploy:
+  build-deploy-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,4 +23,4 @@ jobs:
       - name: Visual regression tests
         env:
           CHROMATIC_TOKEN: ${{ secrets.CHROMATIC_TOKEN }}
-        run: pnpm --filter storybook chromatic --project-token="$CHROMATIC_TOKEN"
+        run: pnpm --filter storybook chromatic"
