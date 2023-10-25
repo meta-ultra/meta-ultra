@@ -15,17 +15,12 @@ import { isElement, isFragment } from "react-is";
 import useEvent from "react-use-event-hook";
 import { ButtonMore } from "./buttons/ButtonMore/ButtonMore";
 import useWindowResize from "../../../hooks/useWindowResize";
-import useElements, {
-  ContextualReactNodesType,
-} from "../../../hooks/useElements/useElements";
+import useElements, { ContextualReactNodesType } from "../../../hooks/useElements/useElements";
 import { QuerySectionProvider } from "./useQuerySectionContext";
 import withInitialProps from "../../../hocs/withInitialProps";
 import "./QuerySection.css";
 
-type QuerySectionProps<
-  QueryType extends object,
-  ContextType
-> = PropsWithChildren<{
+type QuerySectionProps<QueryType extends object, ContextType> = PropsWithChildren<{
   initialValues?: QueryType;
   buttonMoreText?: string;
   className?: string;
@@ -49,18 +44,14 @@ const QuerySection = <QueryType extends object, ContextType>(
   const [formItemCount, queries] = useMemo(() => {
     let children = props.children;
     if (isFragment(children) && children) {
-      children = (children as { props: { children: ReactNode } }).props
-        .children;
+      children = (children as { props: { children: ReactNode } }).props.children;
     }
 
     const queries = Children.toArray(children).map((child) => {
       if (isValidElement(child)) {
-        return cloneElement(
-          child as FunctionComponentElement<{ className: string }>,
-          {
-            className: "!mb-0",
-          }
-        );
+        return cloneElement(child as FunctionComponentElement<{ className: string }>, {
+          className: "mu-query-section__form-item--inline",
+        });
       }
 
       return child;
@@ -98,18 +89,15 @@ const QuerySection = <QueryType extends object, ContextType>(
   return (
     <section
       className={classNames("mu-query-section", props.className, {
-        "mu-query-section--lg":
-          formItemCount <= 2 && (props.buttons?.length || 0) <= 4,
+        "mu-query-section--lg": formItemCount <= 2 && (props.buttons?.length || 0) <= 4,
       })}
     >
       <section className="mu-query-section__form-container">
         <Form
           form={form}
           className={classNames(props.formClassName, {
-            "mu-query-section__form":
-              props.formClassName === undefined && formItemCount >= 2,
-            "mu-query-section__form--lot":
-              props.formClassName === undefined && formItemCount > 2,
+            "mu-query-section__form": props.formClassName === undefined && formItemCount >= 2,
+            "mu-query-section__form--lot": props.formClassName === undefined && formItemCount > 2,
           })}
         >
           {expand
@@ -139,18 +127,13 @@ const QuerySection = <QueryType extends object, ContextType>(
           "mu-query-section__buttons--sm": formItemCount <= 2,
         })}
       >
-        <QuerySectionProvider value={{ form, formItemCount }}>
-          {queryButtons}
-        </QuerySectionProvider>
+        <QuerySectionProvider value={{ form, formItemCount }}>{queryButtons}</QuerySectionProvider>
       </section>
     </section>
   );
 };
 
-const QuerySectionWithInitialProps = withInitialProps(
-  ["initialValues"],
-  QuerySection
-);
+const QuerySectionWithInitialProps = withInitialProps(["initialValues"], QuerySection);
 
 export type { QuerySectionProps };
 export default QuerySectionWithInitialProps;
