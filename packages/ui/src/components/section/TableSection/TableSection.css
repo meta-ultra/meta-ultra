@@ -1,0 +1,7 @@
+.mu-table-section {
+  @apply flex-1;
+}
+
+.mu-table-section--invisible {
+  @apply invisible;
+}

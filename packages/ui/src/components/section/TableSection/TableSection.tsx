@@ -4,6 +4,8 @@ import { ContextualTableColumnsType } from "./useTableColumns/useTableColumns";
 import { RecordTypeConstraint, ContextCheckboxType } from "./useTableColumns/types";
 import useWindowResize from "../../../hooks/useWindowResize";
 import withInitialProps from "../../../hocs/withInitialProps";
+import "./TableSection.css";
+import classNames from "classnames";
 
 interface IPagination {
   defaultPageSize: number;
@@ -107,15 +109,13 @@ const TableSection = <
           x: sectionRef.current.offsetWidth,
           y: sectionRef.current.offsetHeight - headerHeight - invisibleHeight,
         });
+
+        sectionRef.current.classList.remove("mu-table-section--invisible");
       }
     };
 
-    // if (bordered) {
-    handle();
-    setTimeout(handle, 1000); // TODO: why the offsetHeight of header would be larger than expected
-    // } else {
-    //   handle();
-    // }
+    // TODO: find a preciser solution
+    setTimeout(handle, 200);
   }, [recalculateScroll, screenWidth, screenHeight, bordered]);
 
   const paginationVisible = !!pagination;
@@ -154,7 +154,10 @@ const TableSection = <
   }, [columns.context, selectedRowKeys, onSelectedRowKeysChange]);
 
   return (
-    <section ref={sectionRef} className="flex-1">
+    <section
+      ref={sectionRef}
+      className={classNames("mu-table-section", "mu-table-section--invisible")}
+    >
       <Table
         loading={loading || dataSource === undefined}
         rowKey={rowKey}
