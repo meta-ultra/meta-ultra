@@ -1,10 +1,8 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
   /**
-   * call the default formatter set by `editor.defaultFormatter` to format the file on save.
-   * caveat, enable `Formatting` at the right bottom first, even set `editor.formatOnSave` to true.
-   * set false to it when use Format Code Action extension.
+   * Call the default formatter set by `editor.defaultFormatter` to format the file on save.
+   * CAVEAT: enable `Formatting` at the right bottom first, even set `editor.formatOnSave` to true.
+   * Set false to it when use Format Code Action extension.
    */
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": false,
@@ -51,6 +49,13 @@
     ]
   },
   "[sass]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": [
+      "source.formatDocument",
+      "source.fixAll.stylelint"
+    ]
+  },
+  "[less]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": [
       "source.formatDocument",

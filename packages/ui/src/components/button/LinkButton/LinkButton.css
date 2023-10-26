@@ -1,3 +1,15 @@
+.mu-link-button__icon {
+  @apply inline-block mr-1 relative -top-[2px] text-base;
+
+  &:last-child {
+    @apply hidden;
+  }
+
+  &:first-child {
+    display: initial;
+  }
+}
+
 .mu-link-button {
   @apply select-none block w-fit;
 
@@ -5,23 +17,14 @@
     &:first-child {
       @apply hidden;
     }
+
     &:last-child {
       display: initial;
     }
   }
 }
 
-.mu-link-button__icon {
-  @apply inline-block mr-1 relative -top-[2px] text-base;
-
-  &:last-child {
-    @apply hidden;
-  }
-  &:first-child {
-    display: initial;
-  }
-}
-
 .mu-link--clickable {
   @apply cursor-pointer;
 }
+
