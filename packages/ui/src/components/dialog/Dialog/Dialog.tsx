@@ -2,6 +2,7 @@ import { FC, ReactNode } from "react";
 import { Modal, Spin, Skeleton } from "antd";
 import { DialogContextProvider } from "./useDialogContext";
 import useLoading from "../../../hooks/useLoading";
+import "./Dialog.css";
 
 interface DialogProps {
   title: string;
@@ -14,10 +15,7 @@ interface DialogProps {
 }
 
 const Dialog: FC<DialogProps> = (props) => {
-  const [loading, children, context] = useLoading(
-    props.visible,
-    props.children
-  );
+  const [loading, children, context] = useLoading(props.visible, props.children);
 
   return (
     <Modal
@@ -31,13 +29,13 @@ const Dialog: FC<DialogProps> = (props) => {
       footer={props.footer || null}
     >
       <Spin tip={props.tip} spinning={loading}>
-        {children ? (
-          <DialogContextProvider value={context}>
-            {children}
-          </DialogContextProvider>
-        ) : (
-          <Skeleton active />
-        )}
+        <div className="mu-dialog__body">
+          {children ? (
+            <DialogContextProvider value={context}>{children}</DialogContextProvider>
+          ) : (
+            <Skeleton active />
+          )}
+        </div>
       </Spin>
     </Modal>
   );

@@ -29,6 +29,7 @@ import { ButtonUpdate } from "../../components/section/QuerySection/buttons/Butt
 import { buttonSearchModifier, buttonTextModifier } from "../../hooks/useElements/modifiers";
 import FormDialog from "../../components/dialog/FormDialog/FormDialog";
 import "./CURD.css";
+import { DialogProps } from "@/components/dialog/Dialog";
 
 const { useTableColumns, actionsTableColumnModifier, sortableTableColumnModifier } = TableSection;
 
@@ -91,6 +92,7 @@ type CURDProps<
     createDialogFooter?: ContextualReactNodesType<{
       confirm: { onClick: (values: Record<string, unknown>) => void };
     }>;
+    createDialogWidth?: DialogProps["width"];
     updateDialogSuccessText?: string;
     updateDialogTitleText?: string;
     updateDialogTipText?: string;
@@ -100,6 +102,7 @@ type CURDProps<
     updateDialogFooter?: ContextualReactNodesType<{
       confirm: { onClick: (values: Record<string, unknown>) => void };
     }>;
+    updateDialogWidth?: DialogProps["width"];
   };
 
 const useCURDQueryButtons: UseElements<{
@@ -543,6 +546,7 @@ const CURD = <
         textCancel={props.createDialogCancelText}
         textConfirm={props.createDialogConfirmText}
         footer={createDialogFooter}
+        width={props.createDialogWidth}
         onClose={() => setCreateDialogVisible(false)}
       >
         {props.createDialogContent}
@@ -554,6 +558,7 @@ const CURD = <
         tip={props.updateDialogTipText}
         visible={!!editingRecord}
         footer={updateDialogFooter}
+        width={props.updateDialogWidth}
         textCancel={props.updateDialogCancelText}
         textConfirm={props.updateDialogConfirmText}
         onClose={() => setEditingRecord(undefined)}
