@@ -1,3 +1,5 @@
+@import url("../common.css");
+
 .mu-dialog__body {
   @apply pt-5;
 }
