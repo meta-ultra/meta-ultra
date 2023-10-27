@@ -1,5 +1,11 @@
 import type {} from "rc-table"; // fix the bug introduced by using pnpm in TypeScript project
 
+export type { PictureWallProps } from "./components/upload/PictureWall/PictureWall";
+export { default as PictureWall } from "./components/upload/PictureWall/PictureWall";
+export type { PictureWallControlProps } from "./components/form/PictureWallControl/PictureWallControl";
+export { default as PictureWallControl } from "./components/form/PictureWallControl/PictureWallControl";
+export type { SwitchControlProps } from "./components/form/SwitchControl/SwitchControl";
+export { default as SwitchControl } from "./components/form/SwitchControl/SwitchControl";
 export type { LinkDeleteButtonProps } from "./components/button/LinkDeleteButton/LinkDeleteButton";
 export { default as LinkDeleteButton } from "./components/button/LinkDeleteButton/LinkDeleteButton";
 export type { LinkButtonProps } from "./components/button/LinkButton/LinkButton";
