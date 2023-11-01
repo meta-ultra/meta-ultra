@@ -6,3 +6,8 @@ bundle
 
 # Ignore scripts:
 **/scripts
+
+# Ignore configurations:
+*.config.js
+*.conf.js
+*rc.js

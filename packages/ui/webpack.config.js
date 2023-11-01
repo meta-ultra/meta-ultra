@@ -15,13 +15,10 @@ module.exports = (env) => ({
     Header: "./src/components/layout/Header/Header.tsx",
     Menu: "./src/components/layout/Menu/Menu.tsx",
     Main: "./src/components/layout/Main/Main.tsx",
-    DynamicDatePicker:
-      "./src/components/form/DynamicDatePicker/DynamicDatePicker.tsx",
+    DynamicDatePicker: "./src/components/form/DynamicDatePicker/DynamicDatePicker.tsx",
     LinkButton: "./src/components/button/LinkButton/LinkButton.tsx",
-    LinkDeleteButton:
-      "./src/components/button/LinkDeleteButton/LinkDeleteButton.tsx",
-    LinkUpdateButton:
-      "./src/components/button/LinkUpdateButton/LinkUpdateButton.tsx",
+    LinkDeleteButton: "./src/components/button/LinkDeleteButton/LinkDeleteButton.tsx",
+    LinkUpdateButton: "./src/components/button/LinkUpdateButton/LinkUpdateButton.tsx",
     Dialog: "./src/components/dialog/Dialog/index.ts",
     FormDialog: "./src/components/dialog/FormDialog/index.ts",
     QuerySection: "./src/components/section/QuerySection/index.ts",
@@ -111,6 +108,8 @@ module.exports = (env) => ({
     /^react$/,
     /^react-dom\/.+$/,
     /^react-dom$/,
+    /^react-router-dom$/,
+    /^react-router-dom\/.+$/,
     /^antd$/,
     /^@babel\/runtime\/.*$/,
     /^@meta-ultra\/.*$/,
