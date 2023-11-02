@@ -2,12 +2,17 @@ import {
   createContext,
   useContext,
   useRef,
+  useMemo,
   type FC,
   type ComponentType,
   type PropsWithChildren,
 } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import useEvent from "./useEvent";
 
+/**----------------------
+ *    AuthContext
+ *------------------------**/
 type AuthContextType = {
   state?: object;
   login: (state: object) => void;
@@ -17,75 +22,101 @@ type AuthContextType = {
   NavigateToRequireAuth: ComponentType;
 };
 
-const Context = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+/*---- END OF AuthContext ----*/
 
+/**----------------------
+ *    useAuth
+ *------------------------**/
 const useAuth = () => {
-  const context = useContext(Context);
+  const context = useContext(AuthContext);
   if (context === undefined) {
     throw Error(`useAuth must be inside of AuthProvider.`);
   }
 
   return context;
 };
+/*---- END OF useAuth ----*/
 
+/**----------------------
+ *    AuthProvider
+ *------------------------**/
 type AuthProviderProps = PropsWithChildren<{
   initialState?: object;
   loginPath?: string;
-  requireAuthPath?: string;
+  requireAuthIndexPath?: string;
   onLogin?: (state: object) => void;
   onLogout?: () => void;
 }>;
+
+const assembleLoginPath = (loginPath: string, redirectTo?: string) => {
+  if (redirectTo) {
+    const jointmark = loginPath.indexOf("?") === -1 ? "?" : "&";
+    return loginPath + jointmark + new URLSearchParams([["redirectTo", redirectTo]]).toString();
+  } else {
+    return loginPath;
+  }
+};
 
 const AuthProvider: FC<AuthProviderProps> = ({
   children,
   initialState,
   loginPath = "/login",
-  requireAuthPath = "/dashboard",
+  requireAuthIndexPath: requireAuthPath = "/dashboard",
   onLogin,
   onLogout,
 }) => {
   const navigate = useNavigate();
-  const { redirectTo } = useParams();
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo");
   const stateRef = useRef<object | undefined>(initialState);
-  const login = useRef<AuthContextType["login"]>((state) => {
+
+  const login = useEvent<AuthContextType["login"]>((state) => {
     stateRef.current = state;
     navigate(redirectTo || requireAuthPath);
     onLogin && onLogin(state);
   });
-  const logout = useRef<AuthContextType["logout"]>((redirectTo) => {
+
+  const logout = useEvent<AuthContextType["logout"]>((redirectTo) => {
+    console.log("red", redirectTo);
     stateRef.current = undefined;
-    navigate(
-      loginPath +
-        (redirectTo ? "?" + new URLSearchParams([["redirectTo", redirectTo]]).toString() : "")
-    );
+    navigate(assembleLoginPath(loginPath, redirectTo));
     onLogout && onLogout();
   });
-  const isLogin = useRef<AuthContextType["isLogin"]>(() => stateRef.current !== undefined);
-  const NavigateToLogin = useRef<AuthContextType["NavigateToLogin"]>(({ redirectTo }) => (
-    <Navigate
-      to={
-        loginPath +
-        (redirectTo ? "?" + new URLSearchParams([["redirectTo", redirectTo]]).toString() : "")
-      }
-    />
-  ));
-  const NavigateToRequireAuth = useRef(() => <Navigate to={redirectTo || requireAuthPath} />);
+
+  const isLogin = useEvent<AuthContextType["isLogin"]>(() => stateRef.current !== undefined);
+
+  const NavigateToLogin = useMemo(
+    () =>
+      function NavigateToLogin({ redirectTo }: { redirectTo?: string }) {
+        return <Navigate to={assembleLoginPath(loginPath, redirectTo)} />;
+      },
+    [loginPath]
+  );
+  const NavigateToRequireAuth = useMemo(
+    () =>
+      function NavigateToRequireAuth() {
+        return <Navigate to={redirectTo || requireAuthPath} />;
+      },
+    [redirectTo, requireAuthPath]
+  );
 
   return (
-    <Context.Provider
+    <AuthContext.Provider
       value={{
         state: stateRef.current,
-        login: login.current,
-        logout: logout.current,
-        isLogin: isLogin.current,
-        NavigateToLogin: NavigateToLogin.current,
-        NavigateToRequireAuth: NavigateToRequireAuth.current,
+        login,
+        logout,
+        isLogin,
+        NavigateToLogin: NavigateToLogin,
+        NavigateToRequireAuth: NavigateToRequireAuth,
       }}
     >
       {children}
-    </Context.Provider>
+    </AuthContext.Provider>
   );
 };
+/*---- END OF AuthProvider ----*/
 
 export { useAuth, AuthProvider };
 export default { useAuth, AuthProvider };
