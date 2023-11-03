@@ -4,6 +4,7 @@ interface Authorize {
 
 interface AuthMeta {
   authorize?: Authorize;
+  authorizeInterval?: number;
 }
 
 export type { Authorize, AuthMeta };

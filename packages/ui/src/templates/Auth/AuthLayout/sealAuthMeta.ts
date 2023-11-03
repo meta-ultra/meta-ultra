@@ -4,6 +4,7 @@ import type { AuthMeta } from "./AuthMeta";
 interface SingleThreadAuthorize {
   (path: string): unknown;
   suspender?: Suspender;
+  lastDateTimeAuthorize?: number;
 }
 
 interface SealedAuthMeta {
@@ -12,12 +13,20 @@ interface SealedAuthMeta {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const sealAuthMeta = (meta?: AuthMeta): SealedAuthMeta => {
+const sealAuthMeta = (meta?: AuthMeta, authorizeInterval = 30 * 60 * 1000): SealedAuthMeta => {
   const sealedAuthMeta: SealedAuthMeta = {};
 
   if (meta && meta.authorize) {
     const authorize = meta.authorize;
+    authorizeInterval = meta.authorizeInterval || authorizeInterval;
     const singleThreadAuthorize: SingleThreadAuthorize = (path: string) => {
+      if (
+        singleThreadAuthorize.lastDateTimeAuthorize !== undefined &&
+        +new Date() - singleThreadAuthorize.lastDateTimeAuthorize < authorizeInterval
+      ) {
+        return;
+      }
+
       if (!singleThreadAuthorize.suspender) {
         const promiseInstance = authorize(path).then((value) => {
           if (value) {
@@ -36,6 +45,7 @@ const sealAuthMeta = (meta?: AuthMeta): SealedAuthMeta => {
           //! IMPORTANT: Hold the thread until the next round of event loop to avoid endless loop.
           await sleep(16);
           singleThreadAuthorize.suspender = undefined;
+          singleThreadAuthorize.lastDateTimeAuthorize = +new Date();
         });
       }
 
