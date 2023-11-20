@@ -8,7 +8,7 @@ import { type RcFile, type UploadProps } from "antd/lib/upload/interface";
 import useEvent from "react-use-event-hook";
 import UploadButton, { type UploadButtonProps } from "./UploadButton";
 import usePreview, { getBase64 } from "./usePreview";
-import { isNil } from "lodash-es";
+import { isEmpty, isNil } from "lodash-es";
 
 type MIME_IMAGE_TYPE =
   | "image/*"
@@ -171,7 +171,7 @@ const PictureWall: FC<PictureWallProps> = ({
       if (!isNil(dimension.height) && height !== dimension.height) {
         throw { name: "ERR_DIMENSION", value: { width, height } };
       }
-      if (!isNil(dimension.width) && height !== dimension.width) {
+      if (!isNil(dimension.width) && width !== dimension.width) {
         throw { name: "ERR_DIMENSION", value: { width, height } };
       }
       // ! Width / Height is error-prone
@@ -191,7 +191,18 @@ const PictureWall: FC<PictureWallProps> = ({
         return beforeUpload(file, fileList);
       }
 
-      return true;
+      const fireImmediateUpload = !(isNil(action) || isEmpty(action));
+      if (process.env.NODE_ENV === "development") {
+        if (fireImmediateUpload) {
+          console.info(`Fire immediate upload to "${action}".`);
+        } else {
+          console.warn(
+            `[PictureWall] Due to "action" property is empty or nil, please execute uploading by manual.`
+          );
+        }
+      }
+
+      return fireImmediateUpload;
     } catch (e) {
       let content;
       switch ((e as Error).name) {
@@ -226,6 +237,8 @@ const PictureWall: FC<PictureWallProps> = ({
     }
   });
   /*---------------------------- END OF VALIDATION ----------------------------*/
+
+  console.log("fileList", fileList);
 
   return (
     <>
