@@ -68,6 +68,8 @@ type PictureWallProps = Pick<
 type Dimension = {
   width?: number;
   height?: number;
+  minWidth?: number;
+  minHeight?: number;
   ratio?: number;
 };
 
@@ -160,14 +162,25 @@ const PictureWall: FC<PictureWallProps> = ({
   const validateDimension = useEvent(async (file: RcFile) => {
     if (
       dimension &&
-      (!isNil(dimension.height) || !isNil(dimension.width) || !isNil(dimension.ratio))
+      (!isNil(dimension.minWidth) ||
+        !isNil(dimension.minHeight) ||
+        !isNil(dimension.height) ||
+        !isNil(dimension.width) ||
+        !isNil(dimension.ratio))
     ) {
       const dataUrl = await getBase64(file);
       const img = new Image();
       img.src = dataUrl;
+      // Sleep for a while to get the natural dimensions of image
       await sleep();
       const { naturalWidth: width, naturalHeight: height } = img;
 
+      if (!isNil(dimension.minHeight) && height < dimension.minHeight) {
+        throw { name: "ERR_DIMENSION", value: { width, height } };
+      }
+      if (!isNil(dimension.minWidth) && width < dimension.minWidth) {
+        throw { name: "ERR_DIMENSION", value: { width, height } };
+      }
       if (!isNil(dimension.height) && height !== dimension.height) {
         throw { name: "ERR_DIMENSION", value: { width, height } };
       }

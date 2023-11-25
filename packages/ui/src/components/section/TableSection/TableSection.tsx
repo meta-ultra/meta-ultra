@@ -115,14 +115,14 @@ const TableSection = <
     };
 
     // TODO: find a preciser solution
-    setTimeout(handle, 200);
+    setTimeout(handle, 500);
   }, [recalculateScroll, screenWidth, screenHeight, bordered]);
 
   const paginationVisible = !!pagination;
   const scroll = useMemo(() => {
     return {
       x: Math.max(remainingDimensions.x - 25, minScrollX),
-      y: remainingDimensions.y - (paginationVisible ? 70 : 0),
+      y: Math.max(remainingDimensions.y - (paginationVisible ? 70 : 0), 400),
     };
   }, [remainingDimensions, paginationVisible]);
 
