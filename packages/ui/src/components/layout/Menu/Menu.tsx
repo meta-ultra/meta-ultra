@@ -29,9 +29,11 @@ interface MenuProps extends MenuItemsProps {
    * Required title
    */
   title: string;
+  theme?: MenuItemsProps["theme"];
 }
 
 const Menu: FC<MenuProps> = ({
+  theme,
   width = 280,
   collapsedWidth = 50,
   icon,
@@ -57,7 +59,12 @@ const Menu: FC<MenuProps> = ({
       return (
         <h1
           className="mu-menu__header--expanded"
-          style={{ lineHeight: "36px" }}
+          style={
+            {
+              lineHeight: "36px",
+              "--header-color": theme === "dark" ? "#fff" : "#000",
+            } as CSSProperties
+          }
         >
           {icon
             ? createElement(icon, {
@@ -87,6 +94,7 @@ const Menu: FC<MenuProps> = ({
         })}
       >
         <Sider
+          theme={theme}
           trigger={null}
           width={width}
           collapsedWidth={collapsedWidth}
@@ -96,6 +104,7 @@ const Menu: FC<MenuProps> = ({
         >
           {header}
           <MenuItems
+            theme={theme}
             onSelect={(key) => {
               setCollapsed(true);
               onSelect(key);

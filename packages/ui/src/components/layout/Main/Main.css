@@ -1,10 +1,14 @@
 .mu-main {
-  margin: 5;
-  background: #fff;
-  overflow-y: auto;
-  overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  margin: 5;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #fff;
+
+  & .ant-tabs-nav-wrap {
+    padding-left: 5px;
+  }
 }
 
 .mu-main__content {

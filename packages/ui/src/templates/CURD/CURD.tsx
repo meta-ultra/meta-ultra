@@ -103,6 +103,7 @@ type CURDProps<
       confirm: { onClick: (values: Record<string, unknown>) => void };
     }>;
     updateDialogWidth?: DialogProps["width"];
+    onSelectedRowKeysChange?: (keys: any) => void;
   };
 
 const useCURDQueryButtons: UseElements<{
@@ -263,6 +264,9 @@ const CURD = <
   });
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
+  useEffect(() => {
+    props.onSelectedRowKeysChange && props.onSelectedRowKeysChange(selectedRowKeys);
+  }, [selectedRowKeys]);
   const handleSelectedRowKeysChange = useEvent((keys: Key[]) => {
     setSelectedRowKeys(keys);
 

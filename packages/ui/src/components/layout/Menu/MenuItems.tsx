@@ -1,5 +1,5 @@
 import { FC, createElement, ReactNode } from "react";
-import { Menu } from "antd";
+import { Menu, type MenuProps } from "antd";
 
 /**
  * @see https://ant.design/components/menu-cn#itemtype
@@ -14,6 +14,7 @@ interface MenuItem {
 }
 
 interface MenuItemsProps {
+  theme?: MenuProps["theme"];
   /**
    * Required click event on menu item
    */
@@ -28,10 +29,10 @@ interface MenuItemsProps {
   selectedKeys: string[];
 }
 
-const MenuItems: FC<MenuItemsProps> = ({ onSelect, items, selectedKeys }) => {
+const MenuItems: FC<MenuItemsProps> = ({ theme = "dark", onSelect, items, selectedKeys }) => {
   return (
     <Menu
-      theme="dark"
+      theme={theme}
       mode="inline"
       items={items}
       selectedKeys={selectedKeys}
