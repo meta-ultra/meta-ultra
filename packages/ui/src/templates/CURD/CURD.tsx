@@ -1,4 +1,13 @@
-import { Key, useState, useRef, useReducer, ReactNode, useEffect } from "react";
+import {
+  Key,
+  useState,
+  useRef,
+  useReducer,
+  ReactNode,
+  useEffect,
+  useImperativeHandle,
+  forwardRef,
+} from "react";
 import { FormInstance, Modal, message, Alert, Breadcrumb, BreadcrumbProps } from "antd";
 import useEvent from "react-use-event-hook";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
@@ -174,405 +183,428 @@ const pipe = (...fns: PipeFnType[]): PipeFnType | void => {
   return pipe(...fns.slice(0, -2), (...args: unknown[]): unknown => prev && prev(next, ...args));
 };
 
-const CURD = <
-  QueryFormItemsType extends object,
-  QueryContextType,
-  TableRecordType extends RecordTypeConstraint,
-  TableContextType extends ContextCheckboxType<TableRecordType> & CURDContextType<TableRecordType>,
-  TableExtendedColumnType
->(
-  props: CURDProps<
-    QueryFormItemsType,
+const CURD = forwardRef(
+  <
+    QueryFormItemsType extends object,
     QueryContextType,
-    TableRecordType,
-    TableContextType,
+    TableRecordType extends RecordTypeConstraint,
+    TableContextType extends ContextCheckboxType<TableRecordType> &
+      CURDContextType<TableRecordType>,
     TableExtendedColumnType
-  >
-) => {
-  const [modal, modalContextHolder] = Modal.useModal();
-  const [messageApi, messageContextHolder] = message.useMessage();
-  const [internalState, dispatch] = useReducer(
-    (
-      state: {
-        query: Record<string, unknown>;
-        pagination: { page: number; pageSize: number };
-      },
-      action:
-        | {
-            type: "PAGINATION/SET";
-            payload: { page: number; pageSize: number };
-          }
-        | { type: "QUERY/SET"; payload: Record<string, unknown> }
-    ) => {
-      switch (action.type) {
-        case "QUERY/SET":
-          return { ...state, query: action.payload };
-        case "PAGINATION/SET":
-          return { ...state, pagination: action.payload };
-        default:
-          return state;
-      }
-    },
-    {
-      query: props.initialQuery ?? {},
-      pagination: {
-        page: props.initialTablePage ?? 1,
-        pageSize: props.initialTablePageSize ?? 10,
-      },
-    }
-  );
+  >(
+    props: CURDProps<
+      QueryFormItemsType,
+      QueryContextType,
+      TableRecordType,
+      TableContextType,
+      TableExtendedColumnType
+    >,
+    ref: any
+  ) => {
+    useImperativeHandle(
+      ref,
+      () => ({
+        clearSelectedRowKeys: () => {
+          setSelectedRowKeys([]);
+        },
+      }),
+      []
+    );
 
-  useEffect(() => {
-    const onQuery = props.onQuery;
-    if (onQuery) {
-      (async () => {
-        if (onQuery) {
-          setLoading(true);
-
-          try {
-            await onQuery(internalState.query, internalState.pagination);
-          } catch (e) {
-            messageApi.error((e as Error).message);
-          } finally {
-            setLoading(false);
-          }
+    const [modal, modalContextHolder] = Modal.useModal();
+    const [messageApi, messageContextHolder] = message.useMessage();
+    const [internalState, dispatch] = useReducer(
+      (
+        state: {
+          query: Record<string, unknown>;
+          pagination: { page: number; pageSize: number };
+        },
+        action:
+          | {
+              type: "PAGINATION/SET";
+              payload: { page: number; pageSize: number };
+            }
+          | { type: "QUERY/SET"; payload: Record<string, unknown> }
+      ) => {
+        switch (action.type) {
+          case "QUERY/SET":
+            return { ...state, query: action.payload };
+          case "PAGINATION/SET":
+            return { ...state, pagination: action.payload };
+          default:
+            return state;
         }
-      })();
-    }
-  }, [props.onQuery, internalState.query, internalState.pagination, messageApi]);
+      },
+      {
+        query: props.initialQuery ?? {},
+        pagination: {
+          page: props.initialTablePage ?? 1,
+          pageSize: props.initialTablePageSize ?? 10,
+        },
+      }
+    );
 
-  const [loading, setLoading] = useState(false);
-  const handleSearch = useEvent(async ({ form }) => {
-    try {
-      const values = form.getFieldsValue();
-      dispatch({ type: "QUERY/SET", payload: values });
-    } catch (e) {
-      messageApi.error((e as Error).message);
-    }
-  });
-  const handleCreateClick = useEvent(() => {
-    if (props.createDialogContent) {
-      setCreateDialogVisible(true);
-    }
-  });
+    useEffect(() => {
+      const onQuery = props.onQuery;
+      if (onQuery) {
+        (async () => {
+          if (onQuery) {
+            setLoading(true);
 
-  const editingRecordRef = useRef<TableRecordType>();
-  const [editingRecord, setEditingRecord] = useState<TableRecordType>();
-  const handleUpdateClick = useEvent(({ state }) => {
-    const values = state ?? editingRecordRef.current;
-    setEditingRecord(values);
-  });
+            try {
+              await onQuery(internalState.query, internalState.pagination);
+            } catch (e) {
+              messageApi.error((e as Error).message);
+            } finally {
+              setLoading(false);
+            }
+          }
+        })();
+      }
+    }, [props.onQuery, internalState.query, internalState.pagination, messageApi]);
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
-  useEffect(() => {
-    props.onSelectedRowKeysChange && props.onSelectedRowKeysChange(selectedRowKeys);
-  }, [selectedRowKeys]);
-  const handleSelectedRowKeysChange = useEvent((keys: Key[]) => {
-    setSelectedRowKeys(keys);
+    const [loading, setLoading] = useState(false);
+    const handleSearch = useEvent(async ({ form }) => {
+      try {
+        const values = form.getFieldsValue();
+        dispatch({ type: "QUERY/SET", payload: values });
+      } catch (e) {
+        messageApi.error((e as Error).message);
+      }
+    });
+    const handleCreateClick = useEvent(() => {
+      if (props.createDialogContent) {
+        setCreateDialogVisible(true);
+      }
+    });
 
-    // cache the single one selected record for modification in the future, which might be not found when go to the next page.
-    if (keys.length == 1 && props.tableRowKey !== undefined && props.tableDataSource) {
-      const rowKey = props.tableRowKey;
-      editingRecordRef.current = props.tableDataSource.find((record) => record[rowKey] == keys[0]);
-    } else {
-      editingRecordRef.current = undefined;
-    }
-  });
+    const editingRecordRef = useRef<TableRecordType>();
+    const [editingRecord, setEditingRecord] = useState<TableRecordType>();
+    const handleUpdateClick = useEvent(({ state }) => {
+      const values = state ?? editingRecordRef.current;
+      setEditingRecord(values);
+    });
 
-  const handleDeleteRecords = useEvent(({ state }) => {
-    if (!props.onDeleteRecords) {
-      // debug(`Property 'onDeleteRecords' of 'CURD' is undefined.`);
+    const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
+    useEffect(() => {
+      props.onSelectedRowKeysChange && props.onSelectedRowKeysChange(selectedRowKeys);
+    }, [selectedRowKeys]);
+    const handleSelectedRowKeysChange = useEvent((keys: Key[]) => {
+      setSelectedRowKeys(keys);
 
-      return;
-    }
+      // cache the single one selected record for modification in the future, which might be not found when go to the next page.
+      if (keys.length == 1 && props.tableRowKey !== undefined && props.tableDataSource) {
+        const rowKey = props.tableRowKey;
+        editingRecordRef.current = props.tableDataSource.find(
+          (record) => record[rowKey] == keys[0]
+        );
+      } else {
+        editingRecordRef.current = undefined;
+      }
+    });
 
-    if (props.deleteConfirmText === undefined) {
-      // error(`Property 'deleteConfirmText' of 'CURD' is undefined.`);
+    const handleDeleteRecords = useEvent(({ state }) => {
+      if (!props.onDeleteRecords) {
+        // debug(`Property 'onDeleteRecords' of 'CURD' is undefined.`);
 
-      return;
-    }
+        return;
+      }
 
-    modal.confirm({
-      content: (
-        <span className="mu-curd__delete-confirm__content">
-          {typeof props.deleteConfirmText == "string"
-            ? props.deleteConfirmText
-            : props.deleteConfirmText(state, selectedRowKeys.length)}
-        </span>
-      ),
-      icon: <AiOutlineExclamationCircle size={24} className="mu-curd__delete-confirm__icon" />,
-      okText: props.deleteOkText,
-      cancelText: props.deleteCancelText,
-      async onOk() {
-        if (props.onDeleteRecords) {
-          const keys = isNil(state) ? selectedRowKeys || [] : [state[props.tableRowKey]];
-          try {
-            const result = await props.onDeleteRecords(keys);
-            dispatch({
-              type: "PAGINATION/SET",
-              payload: { ...internalState.pagination },
-            }); // refresh the table
-            if (result) {
-              messageApi.open({ type: "error", content: result.error.message });
-            } else {
+      if (props.deleteConfirmText === undefined) {
+        // error(`Property 'deleteConfirmText' of 'CURD' is undefined.`);
+
+        return;
+      }
+
+      modal.confirm({
+        content: (
+          <span className="mu-curd__delete-confirm__content">
+            {typeof props.deleteConfirmText == "string"
+              ? props.deleteConfirmText
+              : props.deleteConfirmText(state, selectedRowKeys.length)}
+          </span>
+        ),
+        icon: <AiOutlineExclamationCircle size={24} className="mu-curd__delete-confirm__icon" />,
+        okText: props.deleteOkText,
+        cancelText: props.deleteCancelText,
+        async onOk() {
+          if (props.onDeleteRecords) {
+            const keys = isNil(state) ? selectedRowKeys || [] : [state[props.tableRowKey]];
+            try {
+              const result = await props.onDeleteRecords(keys);
+              dispatch({
+                type: "PAGINATION/SET",
+                payload: { ...internalState.pagination },
+              }); // refresh the table
+              if (result) {
+                messageApi.open({ type: "error", content: result.error.message });
+              } else {
+                messageApi.open({
+                  type: "success",
+                  content: props.deleteSuccessText,
+                });
+              }
+            } catch (error) {
               messageApi.open({
-                type: "success",
-                content: props.deleteSuccessText,
+                type: "error",
+                content: (error as Error).message,
               });
             }
-          } catch (error) {
-            messageApi.open({
-              type: "error",
-              content: (error as Error).message,
-            });
           }
-        }
-      },
+        },
+      });
     });
-  });
 
-  const queryButtons = useElements(
-    () => ({
-      elements: (
-        <>
-          <ButtonSearch key="search" onClick={handleSearch} />
-          <ButtonCreate key="create" onClick={handleCreateClick} />
-          <ButtonUpdate key="update" onClick={handleUpdateClick} />
-          <ButtonDelete key="delete" onClick={handleDeleteRecords} />
-          {props.queryButtons}
-        </>
-      ),
-      context: merge(
-        {},
-        {
-          update: {
-            status:
-              selectedRowKeys.length == 1 ? QueryButtonStatus.ENABLE : QueryButtonStatus.DISABLE,
+    const queryButtons = useElements(
+      () => ({
+        elements: (
+          <>
+            <ButtonSearch key="search" onClick={handleSearch} />
+            <ButtonCreate key="create" onClick={handleCreateClick} />
+            <ButtonUpdate key="update" onClick={handleUpdateClick} />
+            <ButtonDelete key="delete" onClick={handleDeleteRecords} />
+            {props.queryButtons}
+          </>
+        ),
+        context: merge(
+          {},
+          {
+            update: {
+              status:
+                selectedRowKeys.length == 1 ? QueryButtonStatus.ENABLE : QueryButtonStatus.DISABLE,
+            },
+            delete: {
+              status:
+                selectedRowKeys.length >= 1 ? QueryButtonStatus.ENABLE : QueryButtonStatus.DISABLE,
+            },
           },
-          delete: {
-            status:
-              selectedRowKeys.length >= 1 ? QueryButtonStatus.ENABLE : QueryButtonStatus.DISABLE,
+          props.queryButtons ? props.queryButtons.context : {}
+        ),
+
+        modifiers: [buttonSearchModifier, buttonTextModifier],
+      }),
+      [selectedRowKeys, props.queryButtons]
+    );
+
+    const columns = useCURDTableColumns<TableRecordType, TableContextType>(
+      () => ({
+        columns: [
+          ...props.tableColumns,
+          {
+            key: "actions",
+            type: "actions",
+            render(value: unknown, record: TableRecordType) {
+              return (
+                <>
+                  <LinkUpdateButton
+                    key="update"
+                    state={record}
+                    text={props.tableActionsUpdateText ?? ""}
+                    onClick={handleUpdateClick}
+                  />
+                  <LinkDeleteButton
+                    key="delete"
+                    state={record}
+                    text={props.tableActionsDeleteText ?? ""}
+                    onClick={handleDeleteRecords}
+                  />
+                </>
+              );
+            },
           },
-        },
-        props.queryButtons ? props.queryButtons.context : {}
-      ),
+        ],
+        modifiers: [
+          ...(props.tableColumns.modifiers ?? []),
+          statusTableColumnModifier,
+          actionsTableColumnModifier,
+          dateTimeTableColumnModifier,
+          sortableTableColumnModifier,
+        ],
+        context: props.tableColumns.context,
+      }),
+      []
+    );
 
-      modifiers: [buttonSearchModifier, buttonTextModifier],
-    }),
-    [selectedRowKeys, props.queryButtons]
-  );
+    const handlePaginationChange = useEvent((page, pageSize) => {
+      dispatch({ type: "PAGINATION/SET", payload: { page, pageSize } });
+    });
 
-  const columns = useCURDTableColumns<TableRecordType, TableContextType>(
-    () => ({
-      columns: [
-        ...props.tableColumns,
-        {
-          key: "actions",
-          type: "actions",
-          render(value: unknown, record: TableRecordType) {
-            return (
-              <>
-                <LinkUpdateButton
-                  key="update"
-                  state={record}
-                  text={props.tableActionsUpdateText ?? ""}
-                  onClick={handleUpdateClick}
-                />
-                <LinkDeleteButton
-                  key="delete"
-                  state={record}
-                  text={props.tableActionsDeleteText ?? ""}
-                  onClick={handleDeleteRecords}
-                />
-              </>
-            );
+    const [createDialogVisible, setCreateDialogVisible] = useState(false);
+    const createDialogFormRef = useRef<FormInstance | null>(null);
+    const createDialogFooter = useElements(() => {
+      if (
+        props.createDialogFooter &&
+        props.createDialogFooter.context &&
+        typeof props.createDialogFooter.context.confirm == "object" &&
+        typeof (
+          props.createDialogFooter.context.confirm as unknown as {
+            onClick: unknown;
+          }
+        ).onClick == "function"
+      ) {
+        const onClick = (
+          props.createDialogFooter.context.confirm as unknown as {
+            onClick: (values: unknown) => unknown;
+          }
+        ).onClick;
+
+        return {
+          context: {
+            confirm: {
+              onClick: pipe(
+                async (next: (...values: unknown[]) => unknown, ...values: unknown[]) => {
+                  try {
+                    next && (await next(...values));
+                    createDialogFormRef.current && createDialogFormRef.current.resetFields();
+                    dispatch({
+                      type: "PAGINATION/SET",
+                      payload: { ...internalState.pagination },
+                    }); // refresh the table
+                    setCreateDialogVisible(false);
+                    messageApi.open({
+                      type: "success",
+                      content: props.createDialogSuccessText,
+                    });
+                  } catch (e) {
+                    messageApi.open({
+                      type: "error",
+                      content: (e as Error).message,
+                    });
+                  }
+                },
+                onClick
+              ),
+            },
           },
-        },
-      ],
-      modifiers: [
-        ...(props.tableColumns.modifiers ?? []),
-        statusTableColumnModifier,
-        actionsTableColumnModifier,
-        dateTimeTableColumnModifier,
-        sortableTableColumnModifier,
-      ],
-      context: props.tableColumns.context,
-    }),
-    []
-  );
+        };
+      } else {
+        return [];
+      }
+    }, [props.createDialogFooter]);
 
-  const handlePaginationChange = useEvent((page, pageSize) => {
-    dispatch({ type: "PAGINATION/SET", payload: { page, pageSize } });
-  });
-
-  const [createDialogVisible, setCreateDialogVisible] = useState(false);
-  const createDialogFormRef = useRef<FormInstance | null>(null);
-  const createDialogFooter = useElements(() => {
-    if (
-      props.createDialogFooter &&
-      props.createDialogFooter.context &&
-      typeof props.createDialogFooter.context.confirm == "object" &&
-      typeof (
-        props.createDialogFooter.context.confirm as unknown as {
-          onClick: unknown;
-        }
-      ).onClick == "function"
-    ) {
-      const onClick = (
-        props.createDialogFooter.context.confirm as unknown as {
-          onClick: (values: unknown) => unknown;
-        }
-      ).onClick;
-
-      return {
-        context: {
-          confirm: {
-            onClick: pipe(async (next: (...values: unknown[]) => unknown, ...values: unknown[]) => {
-              try {
-                next && (await next(...values));
-                createDialogFormRef.current && createDialogFormRef.current.resetFields();
-                dispatch({
-                  type: "PAGINATION/SET",
-                  payload: { ...internalState.pagination },
-                }); // refresh the table
-                setCreateDialogVisible(false);
-                messageApi.open({
-                  type: "success",
-                  content: props.createDialogSuccessText,
-                });
-              } catch (e) {
-                messageApi.open({
-                  type: "error",
-                  content: (e as Error).message,
-                });
-              }
-            }, onClick),
+    const updateDialogFormRef = useRef<FormInstance | null>(null);
+    const updateDialogFooter = useElements(() => {
+      if (
+        props.updateDialogFooter &&
+        props.updateDialogFooter.context &&
+        typeof props.updateDialogFooter.context.confirm == "object" &&
+        typeof (
+          props.updateDialogFooter.context.confirm as unknown as {
+            onClick: unknown;
+          }
+        ).onClick == "function"
+      ) {
+        const onClick = (
+          props.updateDialogFooter.context.confirm as unknown as {
+            onClick: (values: unknown) => unknown;
+          }
+        ).onClick;
+        return {
+          context: {
+            confirm: {
+              onClick: pipe(
+                async (next: (...values: unknown[]) => unknown, ...values: unknown[]) => {
+                  try {
+                    next && (await next(...values));
+                    updateDialogFormRef.current && updateDialogFormRef.current.resetFields();
+                    setEditingRecord(undefined);
+                    dispatch({
+                      type: "PAGINATION/SET",
+                      payload: { ...internalState.pagination },
+                    }); // refresh the table
+                    messageApi.open({
+                      type: "success",
+                      content: props.updateDialogSuccessText,
+                    });
+                  } catch (e) {
+                    messageApi.open({
+                      type: "error",
+                      content: (e as Error).message,
+                    });
+                  }
+                },
+                onClick
+              ),
+            },
           },
-        },
-      };
-    } else {
-      return [];
-    }
-  }, [props.createDialogFooter]);
+        };
+      } else {
+        return [];
+      }
+    }, [props.updateDialogFooter]);
 
-  const updateDialogFormRef = useRef<FormInstance | null>(null);
-  const updateDialogFooter = useElements(() => {
-    if (
-      props.updateDialogFooter &&
-      props.updateDialogFooter.context &&
-      typeof props.updateDialogFooter.context.confirm == "object" &&
-      typeof (
-        props.updateDialogFooter.context.confirm as unknown as {
-          onClick: unknown;
-        }
-      ).onClick == "function"
-    ) {
-      const onClick = (
-        props.updateDialogFooter.context.confirm as unknown as {
-          onClick: (values: unknown) => unknown;
-        }
-      ).onClick;
-      return {
-        context: {
-          confirm: {
-            onClick: pipe(async (next: (...values: unknown[]) => unknown, ...values: unknown[]) => {
-              try {
-                next && (await next(...values));
-                updateDialogFormRef.current && updateDialogFormRef.current.resetFields();
-                setEditingRecord(undefined);
-                dispatch({
-                  type: "PAGINATION/SET",
-                  payload: { ...internalState.pagination },
-                }); // refresh the table
-                messageApi.open({
-                  type: "success",
-                  content: props.updateDialogSuccessText,
-                });
-              } catch (e) {
-                messageApi.open({
-                  type: "error",
-                  content: (e as Error).message,
-                });
-              }
-            }, onClick),
-          },
-        },
-      };
-    } else {
-      return [];
-    }
-  }, [props.updateDialogFooter]);
-
-  return (
-    <>
-      {modalContextHolder}
-      {messageContextHolder}
-      <div className="mu-curd">
-        {props.breadcrumb && <Breadcrumb items={props.breadcrumb} />}
-        <QuerySection
-          initialValues={internalState.query}
-          buttonMoreText={props.queryButtonMoreText}
-          buttons={queryButtons}
-        >
-          {props.queryFormItems}
-        </QuerySection>
-        {props.selectedRowKeysText ? (
-          <Alert
-            message={props.selectedRowKeysText(selectedRowKeys.length)}
-            type="info"
-            showIcon
-            banner
+    return (
+      <>
+        {modalContextHolder}
+        {messageContextHolder}
+        <div className="mu-curd">
+          {props.breadcrumb && <Breadcrumb items={props.breadcrumb} />}
+          <QuerySection
+            initialValues={internalState.query}
+            buttonMoreText={props.queryButtonMoreText}
+            buttons={queryButtons}
+          >
+            {props.queryFormItems}
+          </QuerySection>
+          {props.selectedRowKeysText ? (
+            <Alert
+              message={props.selectedRowKeysText(selectedRowKeys.length)}
+              type="info"
+              showIcon
+              banner
+            />
+          ) : null}
+          <TableSection
+            rowKey={props.tableRowKey}
+            columns={columns}
+            dataSource={props.tableDataSource}
+            selectedRowKeys={selectedRowKeys}
+            loading={loading}
+            total={props.tableTotal}
+            defaultPageSize={props.tableDefaultPageSize}
+            showSizeChanger={props.tableShowSizeChanger}
+            onSelectedRowKeysChange={handleSelectedRowKeysChange}
+            page={internalState.pagination.page}
+            pageSize={internalState.pagination.pageSize}
+            onPaginationChange={props.tableTotal === undefined ? undefined : handlePaginationChange}
+            expandable={props.tableExpandable}
+            minScrollX={props.tableMinScrollX}
           />
-        ) : null}
-        <TableSection
-          rowKey={props.tableRowKey}
-          columns={columns}
-          dataSource={props.tableDataSource}
-          selectedRowKeys={selectedRowKeys}
-          loading={loading}
-          total={props.tableTotal}
-          defaultPageSize={props.tableDefaultPageSize}
-          showSizeChanger={props.tableShowSizeChanger}
-          onSelectedRowKeysChange={handleSelectedRowKeysChange}
-          page={internalState.pagination.page}
-          pageSize={internalState.pagination.pageSize}
-          onPaginationChange={props.tableTotal === undefined ? undefined : handlePaginationChange}
-          expandable={props.tableExpandable}
-          minScrollX={props.tableMinScrollX}
-        />
-      </div>
-      {/* Dialog for creation */}
-      <FormDialog
-        ref={createDialogFormRef}
-        title={props.createDialogTitleText || ""}
-        tip={props.createDialogTipText}
-        visible={createDialogVisible}
-        textCancel={props.createDialogCancelText}
-        textConfirm={props.createDialogConfirmText}
-        footer={createDialogFooter}
-        width={props.createDialogWidth}
-        onClose={() => setCreateDialogVisible(false)}
-      >
-        {props.createDialogContent}
-      </FormDialog>
-      {/* Dialog for update */}
-      <FormDialog
-        ref={updateDialogFormRef}
-        title={props.updateDialogTitleText || ""}
-        tip={props.updateDialogTipText}
-        visible={!!editingRecord}
-        footer={updateDialogFooter}
-        width={props.updateDialogWidth}
-        textCancel={props.updateDialogCancelText}
-        textConfirm={props.updateDialogConfirmText}
-        onClose={() => setEditingRecord(undefined)}
-        record={editingRecord}
-      >
-        {editingRecord && props.updateDialogContent ? props.updateDialogContent : null}
-      </FormDialog>
-    </>
-  );
-};
+        </div>
+        {/* Dialog for creation */}
+        <FormDialog
+          ref={createDialogFormRef}
+          title={props.createDialogTitleText || ""}
+          tip={props.createDialogTipText}
+          visible={createDialogVisible}
+          textCancel={props.createDialogCancelText}
+          textConfirm={props.createDialogConfirmText}
+          footer={createDialogFooter}
+          width={props.createDialogWidth}
+          onClose={() => setCreateDialogVisible(false)}
+        >
+          {props.createDialogContent}
+        </FormDialog>
+        {/* Dialog for update */}
+        <FormDialog
+          ref={updateDialogFormRef}
+          title={props.updateDialogTitleText || ""}
+          tip={props.updateDialogTipText}
+          visible={!!editingRecord}
+          footer={updateDialogFooter}
+          width={props.updateDialogWidth}
+          textCancel={props.updateDialogCancelText}
+          textConfirm={props.updateDialogConfirmText}
+          onClose={() => setEditingRecord(undefined)}
+          record={editingRecord}
+        >
+          {editingRecord && props.updateDialogContent ? props.updateDialogContent : null}
+        </FormDialog>
+      </>
+    );
+  }
+);
+CURD.displayName = "CURD";
 
 export type { UseCURDTableColumns };
 export { CURD, useCURDTableColumns, useCURDQueryButtons };

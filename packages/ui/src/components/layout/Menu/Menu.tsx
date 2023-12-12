@@ -1,10 +1,19 @@
-import { CSSProperties, FC, useState, createElement, useMemo } from "react";
+import {
+  CSSProperties,
+  FC,
+  useState,
+  createElement,
+  useMemo,
+  isValidElement,
+  cloneElement,
+} from "react";
 import { Layout } from "antd";
 import { AiOutlineMenuUnfold, AiOutlineMenuFold } from "react-icons/ai";
 import useEvent from "react-use-event-hook";
 import { MenuItems, MenuItemsProps, MenuItem } from "./MenuItems";
 import classNames from "classnames";
 import "./Menu.css";
+import { isValidElementType } from "react-is";
 
 const Sider = Layout.Sider;
 
@@ -24,7 +33,9 @@ interface MenuProps extends MenuItemsProps {
   /**
    * Optional logo
    */
-  icon?: React.FunctionComponent<{ className?: string; style?: CSSProperties }>;
+  icon?:
+    | React.FunctionComponent<{ className?: string; style?: CSSProperties }>
+    | React.ReactElement<{ className?: string }>;
   /**
    * Required title
    */
@@ -48,9 +59,13 @@ const Menu: FC<MenuProps> = ({
     if (collapsed) {
       return (
         <h1 className="mu-menu__header--collapsed">
-          {icon
+          {isValidElementType(icon)
             ? createElement(icon, {
                 className: "mu-menu__header--collapsed__icon",
+              })
+            : isValidElement(icon)
+            ? cloneElement(icon, {
+                className: classNames(icon.props.className, "mu-menu__header--collapsed__icon"),
               })
             : null}
         </h1>
@@ -66,12 +81,16 @@ const Menu: FC<MenuProps> = ({
             } as CSSProperties
           }
         >
-          {icon
+          {isValidElementType(icon)
             ? createElement(icon, {
                 className: "mu-menu__header--expanded__icon",
               })
+            : isValidElement(icon)
+            ? cloneElement(icon, {
+                className: classNames(icon.props.className, "mu-menu__header--expanded__icon"),
+              })
             : null}
-          {title}
+          {title.length > 10 ? title.slice(0, 10) + "..." : title}
         </h1>
       );
     }
