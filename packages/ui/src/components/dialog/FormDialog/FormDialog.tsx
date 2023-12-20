@@ -55,12 +55,12 @@ const FormDialog = forwardRef<FormInstance, FormDialogProps>((props, ref) => {
       elements: (
         <>
           {props.footer}
-          {props.footer && props.footer.cancel === false ? null : (
+          {props.footer && (props.footer as { cancel?: boolean }).cancel === false ? null : (
             <Button key="cancel" onClick={handleCreateDialogClose} disabled={confirmLoading}>
               {props.textCancel}
             </Button>
           )}
-          {props.footer && props.footer.confirm === false ? null : (
+          {props.footer && (props.footer as { confirm?: boolean }).confirm === false ? null : (
             <ButtonDialogConfirm key="confirm" form={form} onLoading={setConfirmLoading}>
               {props.textConfirm}
             </ButtonDialogConfirm>

@@ -445,7 +445,11 @@ const CURD = forwardRef(
         }
       }
     }, [createDialogVisible, props.createDialogVisibleChange]);
-    useImperativeHandle(props.createDialogFormRef, () => createDialogFormRef.current, []);
+    useImperativeHandle<FormInstance<any> | null, FormInstance<any> | null>(
+      props.createDialogFormRef,
+      () => createDialogFormRef.current,
+      []
+    );
     const createDialogFooter = useElements(() => {
       if (
         props.createDialogFooter &&
