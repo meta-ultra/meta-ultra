@@ -41,6 +41,7 @@ interface MenuProps extends MenuItemsProps {
    */
   title: string;
   theme?: MenuItemsProps["theme"];
+  collapseWhenSelect?: boolean;
 }
 
 const Menu: FC<MenuProps> = ({
@@ -52,6 +53,7 @@ const Menu: FC<MenuProps> = ({
   onSelect,
   items,
   selectedKeys,
+  collapseWhenSelect,
 }) => {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -125,7 +127,9 @@ const Menu: FC<MenuProps> = ({
           <MenuItems
             theme={theme}
             onSelect={(key) => {
-              setCollapsed(true);
+              if (collapseWhenSelect) {
+                setCollapsed(true);
+              }
               onSelect(key);
             }}
             items={items}

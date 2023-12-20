@@ -7,6 +7,7 @@ import {
   useEffect,
   useImperativeHandle,
   forwardRef,
+  MutableRefObject,
 } from "react";
 import { FormInstance, Modal, message, Alert, Breadcrumb, BreadcrumbProps } from "antd";
 import useEvent from "react-use-event-hook";
@@ -92,6 +93,9 @@ type CURDProps<
     deleteSuccessText?: string;
     selectedRowKeysText?: (selectedRowKeysCount: number) => string;
     breadcrumb?: BreadcrumbProps["items"];
+    createDialogVisible?: boolean;
+    createDialogVisibleChange?: (visible: boolean) => void;
+    createDialogFormRef?: MutableRefObject<FormInstance | null>;
     createDialogSuccessText?: string;
     createDialogTitleText?: string;
     createDialogTipText?: string;
@@ -429,8 +433,19 @@ const CURD = forwardRef(
       dispatch({ type: "PAGINATION/SET", payload: { page, pageSize } });
     });
 
-    const [createDialogVisible, setCreateDialogVisible] = useState(false);
+    const [createDialogVisible, setCreateDialogVisible] = useState(!!props.createDialogVisible);
     const createDialogFormRef = useRef<FormInstance | null>(null);
+    useEffect(() => {
+      setCreateDialogVisible(!!props.createDialogVisible);
+    }, [props.createDialogVisible]);
+    useEffect(() => {
+      if (props.createDialogVisibleChange) {
+        if (createDialogVisible !== props.createDialogVisible) {
+          props.createDialogVisibleChange(!!createDialogVisible);
+        }
+      }
+    }, [createDialogVisible, props.createDialogVisibleChange]);
+    useImperativeHandle(props.createDialogFormRef, () => createDialogFormRef.current, []);
     const createDialogFooter = useElements(() => {
       if (
         props.createDialogFooter &&
