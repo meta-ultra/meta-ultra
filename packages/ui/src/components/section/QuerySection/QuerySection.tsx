@@ -71,7 +71,7 @@ const QuerySection = <QueryType extends object, ContextType>(
         elements: (
           <>
             {props.buttons}
-            {(screenWidth <= 640 && formItemCount > 2) || formItemCount > 4 ? (
+            {screenWidth <= 640 && formItemCount > 2 /* || formItemCount > 4*/ ? (
               <ButtonMore
                 key="more"
                 text={props.buttonMoreText}
@@ -103,7 +103,7 @@ const QuerySection = <QueryType extends object, ContextType>(
           {expand
             ? queries
             : queries.map((query, i) => {
-                if (i < (screenWidth <= 640 ? 2 : 4)) {
+                if (i < (screenWidth <= 640 ? 2 : Infinity)) {
                   return query;
                 } else {
                   if (isElement(query)) {
