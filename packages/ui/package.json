@@ -22,6 +22,10 @@
       "module": "./dist/cjs/*"
     }
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "typings": "./dist/types/index.d.ts",
   "sideEffects": [
     "**/*.css"
