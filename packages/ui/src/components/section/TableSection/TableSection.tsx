@@ -33,6 +33,7 @@ interface TableSectionProps<
   expandable?: TableProps<RecordType>["expandable"];
   minScrollX?: number;
   bordered?: boolean;
+  components?: TableProps<RecordType>["components"];
 }
 
 const TableSection = <
@@ -57,6 +58,7 @@ const TableSection = <
   expandable,
   minScrollX = 400,
   bordered,
+  components,
 }: TableSectionProps<RecordType, ContextType, ExtendedColumnType>) => {
   const { width: screenWidth, height: screenHeight } = useWindowResize();
   const [remainingDimensions, setRemainingDimensions] = useState({
@@ -167,6 +169,7 @@ const TableSection = <
         scroll={scroll}
         pagination={pagination}
         expandable={expandable}
+        components={components}
       />
     </section>
   );

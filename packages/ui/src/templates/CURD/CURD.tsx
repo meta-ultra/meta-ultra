@@ -588,6 +588,7 @@ const CURD = forwardRef(
             onPaginationChange={props.tableTotal === undefined ? undefined : handlePaginationChange}
             expandable={props.tableExpandable}
             minScrollX={props.tableMinScrollX}
+            components={props.tableComponents}
           />
         </div>
         {/* Dialog for creation */}
