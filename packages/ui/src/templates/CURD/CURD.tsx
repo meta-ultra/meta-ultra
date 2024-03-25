@@ -272,6 +272,10 @@ const CURD = forwardRef(
       try {
         const values = form.getFieldsValue();
         dispatch({ type: "QUERY/SET", payload: values });
+        dispatch({
+          type: "PAGINATION/SET",
+          payload: { page: 1, pageSize: internalState.pagination.pageSize },
+        });
       } catch (e) {
         messageApi.error((e as Error).message);
       }
