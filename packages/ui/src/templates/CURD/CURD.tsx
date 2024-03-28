@@ -337,7 +337,14 @@ const CURD = forwardRef(
         cancelText: props.deleteCancelText,
         async onOk() {
           if (props.onDeleteRecords) {
-            const keys = isNil(state) ? selectedRowKeys || [] : [state[props.tableRowKey]];
+            let keys = selectedRowKeys || [];
+            if (!isNil(state)) {
+              if (typeof props.tableRowKey === "function") {
+                keys = [(props.tableRowKey as any)(state)];
+              } else {
+                keys = [state[props.tableRowKey]];
+              }
+            }
             try {
               const result = await props.onDeleteRecords(keys);
               dispatch({
